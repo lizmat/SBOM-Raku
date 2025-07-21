@@ -1,0 +1,40 @@
+use Test;
+use SBOM::Raku;
+
+my constant $version = SBOM::Raku.^ver.Str;
+
+plan 2;
+
+my $component := component($*PROGRAM.parent.sibling("META6.json"), :raw-error);
+isa-ok $component, SBOM::Component;
+
+is $component.JSON, Q:s:to|JSON|.chomp, 'did we get the correct JSON';
+{
+  "type": "library",
+  "mime-type": "text/plain",
+  "authors": [
+    {
+      "name": "Elizabeth Mattijsen"
+    }
+  ],
+  "publisher": "zef",
+  "group": "zef",
+  "name": "SBOM::Raku",
+  "version": "$version",
+  "description": "Raku specific SBOM functionality",
+  "scope": "required",
+  "purl": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
+  "externalReferences": [
+    {
+      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=$version",
+      "type": "website"
+    },
+    {
+      "url": "https://github.com/lizmat/SBOM-Raku.git",
+      "type": "source-distribution"
+    }
+  ]
+}
+JSON
+
+# vim: expandtab shiftwidth=4

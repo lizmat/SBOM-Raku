@@ -1,0 +1,31 @@
+=begin pod
+
+=head1 NAME
+
+SBOM::Raku - Raku specific SBOM functionality 
+
+=head1 SYNOPSIS
+
+=begin code :lang<raku>
+use SBOM::Raku;
+=end code
+
+=head1 DESCRIPTION
+
+The C<SBOM::Raku> distribution provides logic for the creation and
+maintenance of SBOM (Software Bill Of Materials) files in the Raku
+Programming Language context.
+
+=head1 AUTHOR
+
+Elizabeth Mattijsen <liz@raku.rocks>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2025 Elizabeth Mattijsen
+
+This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
+
+=end pod
+
+# vim: expandtab shiftwidth=4
