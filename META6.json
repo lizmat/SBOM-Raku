@@ -9,7 +9,8 @@
     "Identity::Utils:ver<0.0.21+>:auth<zef:lizmat>",
     "JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>",
     "PURL:ver<0.0.5+>:auth<zef:lizmat>",
-    "SBOM::CycloneDX:ver<0.0.7+>:auth<zef:lizmat>"
+    "SBOM::CycloneDX:ver<0.0.7+>:auth<zef:lizmat>",
+    "String::Utils:ver<0.0.33+>:auth<zef:lizmat>"
   ],
   "description": "Raku specific SBOM functionality",
   "license": "Artistic-2.0",
@@ -22,6 +23,9 @@
   ],
   "source-url": "https://github.com/lizmat/SBOM-Raku.git",
   "tags": [
+    "SBOM",
+    "RAKU",
+    "META"
   ],
   "test-depends": [
   ],

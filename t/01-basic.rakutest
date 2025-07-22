@@ -1,40 +1,21 @@
 use Test;
-use SBOM::Raku;
+use SBOM::Raku <authors component from-json licenses metadata>;
 
-my constant $version = SBOM::Raku.^ver.Str;
+my $io   := $*PROGRAM.parent.sibling("META6.json");
+my %json := from-json $io.slurp;
 
-plan 2;
+plan 4;
 
-my $component := component($*PROGRAM.parent.sibling("META6.json"), :raw-error);
+my @authors := authors(%json);
+isa-ok @authors.are, SBOM::Contact;
+
+my @licenses := licenses(%json);
+isa-ok @licenses.are, SBOM::License;
+
+my $component := component(%json, :raw-error);
 isa-ok $component, SBOM::Component;
 
-is $component.JSON, Q:s:to|JSON|.chomp, 'did we get the correct JSON';
-{
-  "type": "library",
-  "mime-type": "text/plain",
-  "authors": [
-    {
-      "name": "Elizabeth Mattijsen"
-    }
-  ],
-  "publisher": "zef",
-  "group": "zef",
-  "name": "SBOM::Raku",
-  "version": "$version",
-  "description": "Raku specific SBOM functionality",
-  "scope": "required",
-  "purl": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
-  "externalReferences": [
-    {
-      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=$version",
-      "type": "website"
-    },
-    {
-      "url": "https://github.com/lizmat/SBOM-Raku.git",
-      "type": "source-distribution"
-    }
-  ]
-}
-JSON
+my $metadata := metadata(%json, :raw-error);
+isa-ok $metadata, SBOM::Metadata;
 
 # vim: expandtab shiftwidth=4

@@ -5,41 +5,32 @@ use Identity::Utils:ver<0.0.21+>:auth<zef:lizmat> <
   auth build ecosystem is-pinned rakuland short-name ver
 >;
 use SBOM::enums:ver<0.0.7+>:auth<zef:lizmat> <
-  Acknowledgement ComponentType LicenseId ReferenceSource Scope 
+  Acknowledgement ComponentType LicenseId Phase ReferenceSource Scope
+>;
+use String::Utils:ver<0.0.33+>:auth<zef:lizmat> <
+  sha1
 >;
 use PURL:ver<0.0.5+>:auth<zef:lizmat>;
 
-#- component -------------------------------------------------------------------
-my proto sub component(|) {*}
-my multi sub component(IO() $io, *%_) {
-    component from-json($io.slurp, :immutable), |%_
+#- authors ---------------------------------------------------------------------
+my proto sub authors(|) {*}
+my multi sub authors(%json) {
+    (%json<authors> || %json<author>).map(-> $name {
+        SBOM::Contact.new(:$name, :raw-error)
+    }).List
 }
-my multi sub component(
-   %json,
-  :$type  = "library",
-  :$scope = "required",
-  :$raw-error,
-  *%_
-) {
-    %_<type>  := ComponentType($type);  # throws if invalid
-    %_<scope> := Scope($scope);         # throws if invalid
-
-    %_<name>    := %json<name>    // die "Name must be specified";
-    %_<version> := %json<version> // die "Version must be specified";
-
-    my @authors is List = (%json<authors> || %json<author>).map: -> $name {
-        SBOM::Contact.new(:$name)
+my multi sub authors(%json, %out) {
+    if authors(%json) -> @authors {
+        %out<authors> := @authors
     }
-    die "Must have one or more authors specified" unless @authors;
+    else {
+        die "Must have one or more authors specified";
+    }
+}
 
-    my $identity := build(%json);
-    die "Identity '$identity' must be pinned" unless is-pinned($identity);
-    %_<purl> := PURL.from-identity($identity).Str;  # throws if invalid
-
-    %_<mime-type> := "text/plain";
-    %_<publisher> := %_<group> := ecosystem($identity);
-
-    my @licenses;
+#- licenses --------------------------------------------------------------------
+my proto sub licenses(|) {*}
+my multi sub licenses(%json) {
     with %json<license> {
         my %args = acknowledgement => BEGIN Acknowledgement("declared");
         with try LicenseId($_) -> $id {
@@ -48,11 +39,74 @@ my multi sub component(
         else {
             %args<name> := $_;
         }
-        @licenses = SBOM::License.new(|%args);
+        (SBOM::License.new(
+          license => SBOM::LicenseInfo.new(|%args, :raw-error)
+        ),)
     }
+    else {
+        ()
+    }
+}
+my multi sub licenses(%json, %out) {
+    %out<licenses> := licenses(%json)
+}
 
-    %_<copyright>   := $_ with %json<copyright>;
-    %_<description> := $_ with %json<description>;
+#- metadata --------------------------------------------------------------------
+my sub metadata(|c) { SBOM::Metadata.new: |metadata-hash(|c), :raw-error }
+
+my proto sub metadata-hash(|) {*}
+my multi sub metadata-hash(IO() $io, *%args) {
+    metadata-hash from-json($io.slurp, :immutable), |%args
+}
+my multi sub metadata-hash(
+   %json,
+  :$timestamp = DateTime.now,
+  :$phase     = "build",
+  *%in,
+) {
+    my %out;
+    %out<timestamp>  := $timestamp;
+    %out<lifecycles> := (SBOM::Lifecycle.new(:$phase),);
+
+    my $component  := %out<component> := component(%json, |%in);
+    %out<authors>  := $_ with $component.authors;
+    %out<licenses> := $_ with $component.licenses;
+
+    %out
+}
+
+#- component -------------------------------------------------------------------
+my sub component(|c) { SBOM::Component.new: |component-hash(|c), :raw-error }
+
+my proto sub component-hash(|) {*}
+my multi sub component-hash(IO() $io, *%in) {
+    component-hash from-json($io.slurp, :immutable), |%in
+}
+my multi sub component-hash(
+   %json,
+  :$type  = "library",
+  :$scope = "required",
+  *%in
+) {
+    my %out;
+    %out<type>  := ComponentType($type);  # throws if invalid
+    %out<scope> := Scope($scope);         # throws if invalid
+
+    %out<name>    := %json<name>    // die "Name must be specified";
+    %out<version> := %json<version> // die "Version must be specified";
+
+    authors( %json, %out);
+    licenses(%json, %out);
+
+    my $identity := build(%json);
+    die "Identity '$identity' must be pinned" unless is-pinned($identity);
+    %out<purl> := PURL.from-identity($identity).Str;  # throws if invalid
+
+    %out<mime-type> := "text/plain";
+    %out<publisher> := %out<group> := ecosystem($identity);
+
+    %out<copyright>   := $_ with %json<copyright>;
+    %out<description> := $_ with %json<description>;
 
     my @externalReferences = SBOM::Reference.new(
       :url(rakuland($identity)), :type(BEGIN ReferenceSource("website"))
@@ -62,11 +116,32 @@ my multi sub component(
           :$url, :type(BEGIN ReferenceSource("source-distribution"))
         );
     }
+    %out<externalReferences> := @externalReferences.List;
 
-    my @tags = %json<tags>;
+    %out<tags> := %json<tags> // ();
 
-    SBOM::Component.new: :$raw-error,
-      :@authors, :@licenses, :@externalReferences, :@tags, |%_
+    %out
+}
+
+#- sbom ------------------------------------------------------------------------
+my sub sbom(|c) { SBOM::CycloneDX.new: |sbom-hash(|c), :raw-error }
+
+my proto sub sbom-hash(|) {*}
+my multi sub sbom-hash(IO() $io, *%in) {
+    sbom-hash from-json($io.slurp, :immutable), |%in
+}
+my multi sub sbom-hash(
+   %json,
+  :$version = 1,
+  *%in
+) {
+    my %out := SBOM::CycloneDX.Hash;
+
+    %out<version>  := $version;
+    my $metadata := %out<metadata> := metadata(%json, |%in);
+    %out<externalReferences> := $metadata.component.externalReferences;
+
+    %out
 }
 
 #- EXPORT ----------------------------------------------------------------------
@@ -82,10 +157,13 @@ my sub EXPORT(*@names) {
                      Pair.new: "&$out", &code
                  }
              }
-         }  
-      !! UNIT::.grep: {
-             .key.starts-with('&') && !(.key eq '&EXPORT')
          }
+      !! <
+           authors component component-hash licenses metadata
+           metadata-hash sbom sbom-hash
+         >.map({
+             "&$_" => UNIT::{"&$_"}
+         }).Map
 }
 
 #- hack ------------------------------------------------------------------------

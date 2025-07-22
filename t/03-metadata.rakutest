@@ -1,0 +1,92 @@
+use Test;
+use SBOM::Raku <metadata metadata-hash from-json>;
+
+my constant $version = SBOM::Raku.^ver.Str;
+my $timestamp       := DateTime.now;
+
+my $io   := $*PROGRAM.parent.sibling("META6.json");
+my $meta := $io.slurp;
+
+sub metadata-ok($metadata, $source) is test-assertion {
+    subtest "testing metadata from $source" => {
+        plan 2;
+        isa-ok $metadata, SBOM::Metadata;
+        is $metadata.JSON, Q:s:to|JSON|.chomp, 'did we get the correct JSON';
+{
+  "timestamp": "$timestamp",
+  "lifecycles": [
+    {
+      "phase": "build"
+    }
+  ],
+  "authors": [
+    {
+      "name": "Elizabeth Mattijsen"
+    }
+  ],
+  "component": {
+    "type": "library",
+    "mime-type": "text/plain",
+    "authors": [
+      {
+        "name": "Elizabeth Mattijsen"
+      }
+    ],
+    "publisher": "zef",
+    "group": "zef",
+    "name": "SBOM::Raku",
+    "version": "$version",
+    "description": "Raku specific SBOM functionality",
+    "scope": "required",
+    "licenses": [
+      {
+        "license": {
+          "id": "Artistic-2.0",
+          "acknowledgement": "declared"
+        }
+      }
+    ],
+    "purl": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
+    "externalReferences": [
+      {
+        "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=$version",
+        "type": "website"
+      },
+      {
+        "url": "https://github.com/lizmat/SBOM-Raku.git",
+        "type": "source-distribution"
+      }
+    ],
+    "tags": [
+      "SBOM",
+      "RAKU",
+      "META"
+    ]
+  },
+  "licenses": [
+    {
+      "license": {
+        "id": "Artistic-2.0",
+        "acknowledgement": "declared"
+      }
+    }
+  ]
+}
+JSON
+    }
+}
+
+plan 4;
+
+metadata-ok metadata($io, :$timestamp, :raw-error), "io";
+
+my %meta := from-json $meta, :immutable;
+metadata-ok metadata(%meta, :$timestamp, :raw-error), "io/hash";
+
+my %args := metadata-hash($io, :$timestamp, :raw-error);
+metadata-ok SBOM::Metadata.new(:raw-error, |%args), "io/args";
+
+%args := metadata-hash(%meta, :$timestamp, :raw-error);
+metadata-ok SBOM::Metadata.new(:raw-error, |%args), "meta/args";
+
+# vim: expandtab shiftwidth=4

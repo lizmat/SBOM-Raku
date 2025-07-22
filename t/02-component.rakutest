@@ -1,0 +1,69 @@
+use Test;
+use SBOM::Raku <component component-hash from-json>;
+
+my constant $version = SBOM::Raku.^ver.Str;
+my $io   := $*PROGRAM.parent.sibling("META6.json");
+my $meta := $io.slurp;
+
+sub component-ok($component, $source) is test-assertion {
+    subtest "testing component from $source" => {
+        plan 2;
+        isa-ok $component, SBOM::Component;
+        is $component.JSON, Q:s:to|JSON|.chomp, 'did we get the correct JSON';
+{
+  "type": "library",
+  "mime-type": "text/plain",
+  "authors": [
+    {
+      "name": "Elizabeth Mattijsen"
+    }
+  ],
+  "publisher": "zef",
+  "group": "zef",
+  "name": "SBOM::Raku",
+  "version": "$version",
+  "description": "Raku specific SBOM functionality",
+  "scope": "required",
+  "licenses": [
+    {
+      "license": {
+        "id": "Artistic-2.0",
+        "acknowledgement": "declared"
+      }
+    }
+  ],
+  "purl": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
+  "externalReferences": [
+    {
+      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=$version",
+      "type": "website"
+    },
+    {
+      "url": "https://github.com/lizmat/SBOM-Raku.git",
+      "type": "source-distribution"
+    }
+  ],
+  "tags": [
+    "SBOM",
+    "RAKU",
+    "META"
+  ]
+}
+JSON
+    }
+}
+
+plan 4;
+
+component-ok component($io, :raw-error), "io";
+
+my %meta := from-json $meta, :immutable;
+component-ok component(%meta, :raw-error), "io/hash";
+
+my %args := component-hash($io, :raw-error);
+component-ok SBOM::Component.new(:raw-error, |%args), "io/args";
+
+%args := component-hash(%meta, :raw-error);
+component-ok SBOM::Component.new(:raw-error, |%args), "meta/args";
+
+# vim: expandtab shiftwidth=4
