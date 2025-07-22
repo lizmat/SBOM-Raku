@@ -17,7 +17,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "$timestamp",
+    "timestamp": "$timestamp.Str.subst("Z","+00:00")",
     "lifecycles": [
       {
         "phase": "build"

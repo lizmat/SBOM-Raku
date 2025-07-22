@@ -13,7 +13,7 @@ sub metadata-ok($metadata, $source) is test-assertion {
         isa-ok $metadata, SBOM::Metadata;
         is $metadata.JSON, Q:s:to|JSON|.chomp, 'did we get the correct JSON';
 {
-  "timestamp": "$timestamp",
+  "timestamp": "$timestamp.Str.subst("Z","+00:00")",
   "lifecycles": [
     {
       "phase": "build"
