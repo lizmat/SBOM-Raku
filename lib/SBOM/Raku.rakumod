@@ -1,7 +1,7 @@
 use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
 use SBOM::CycloneDX:ver<0.0.8+>:auth<zef:lizmat>;
 
-use Identity::Utils:ver<0.0.22+>:auth<zef:lizmat> <
+use Identity::Utils:ver<0.0.23+>:auth<zef:lizmat> <
   auth build meta dependencies-from-depends ecosystem is-pinned
   raku-land-url short-name ver
 >;

@@ -124,7 +124,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/Identity::Utils@0.0.22",
+      "bom-ref": "pkg:raku/zef:lizmat/Identity::Utils@0.0.23",
       "authors": [
         {
           "name": "Elizabeth Mattijsen"
@@ -133,7 +133,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "Identity::Utils",
-      "version": "0.0.22",
+      "version": "0.0.23",
       "description": "Provide utility functions related to distribution identities",
       "scope": "required",
       "licenses": [
@@ -144,10 +144,10 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/Identity::Utils@0.0.22",
+      "purl": "pkg:raku/zef:lizmat/Identity::Utils@0.0.23",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/Identity::Utils?v=0.0.22",
+          "url": "https://raku.land/zef:lizmat/Identity::Utils?v=0.0.23",
           "type": "website"
         },
         {
@@ -388,7 +388,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
   ],
   "dependencies": [
     {
-      "ref": "Identity::Utils:ver<0.0.22>:auth<zef:lizmat>",
+      "ref": "Identity::Utils:ver<0.0.23>:auth<zef:lizmat>",
       "dependsOn": [
         "String::Utils:ver<0.0.34>:auth<zef:lizmat>"
       ]
@@ -399,7 +399,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "ref": "PURL:ver<0.0.5>:auth<zef:lizmat>",
       "dependsOn": [
-        "Identity::Utils:ver<0.0.22>:auth<zef:lizmat>",
+        "Identity::Utils:ver<0.0.23>:auth<zef:lizmat>",
         "JSON::Fast:ver<0.19>:auth<cpan:TIMOTIMO>"
       ]
     },
