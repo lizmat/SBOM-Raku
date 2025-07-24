@@ -21,7 +21,8 @@ sub metadata-ok($metadata, $source) is test-assertion {
   ],
   "authors": [
     {
-      "name": "Elizabeth Mattijsen"
+      "name": "Elizabeth Mattijsen",
+      "email": "liz@raku.rocks"
     }
   ],
   "component": {
@@ -30,7 +31,8 @@ sub metadata-ok($metadata, $source) is test-assertion {
     "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
     "authors": [
       {
-        "name": "Elizabeth Mattijsen"
+        "name": "Elizabeth Mattijsen",
+        "email": "liz@raku.rocks"
       }
     ],
     "publisher": "zef",
