@@ -1,23 +1,44 @@
 use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
-use SBOM::CycloneDX:ver<0.0.7+>:auth<zef:lizmat>;
+use SBOM::CycloneDX:ver<0.0.8+>:auth<zef:lizmat>;
 
-use Identity::Utils:ver<0.0.21+>:auth<zef:lizmat> <
-  auth build ecosystem is-pinned rakuland short-name ver
+use Identity::Utils:ver<0.0.22+>:auth<zef:lizmat> <
+  auth build meta dependencies-from-depends ecosystem is-pinned
+  raku-land-url short-name ver
 >;
 use SBOM::enums:ver<0.0.7+>:auth<zef:lizmat> <
   Acknowledgement ComponentType LicenseId Phase ReferenceSource Scope
 >;
-use String::Utils:ver<0.0.33+>:auth<zef:lizmat> <
+use SBOM::subsets:ver<0.0.7+>:auth<zef:lizmat> <
+  email
+>;
+use String::Utils:ver<0.0.34+>:auth<zef:lizmat> <
   sha1
 >;
 use PURL:ver<0.0.5+>:auth<zef:lizmat>;
 
+#- helper subs -----------------------------------------------------------------
+
+my sub contact(Str:D $name is copy) {
+    my $email;
+    for $name.words -> $part {
+        if $part.starts-with('<')
+          && $part.ends-with('>')
+          && $part.substr(1, *-1) ~~ email {
+            $email := $part.substr(1, *-1);
+            $name  := $name.subst($part).trim;
+            last;
+        }
+    }
+
+    my %args = :$name, :raw-error;
+    %args<email> := $_ with $email;
+    SBOM::Contact.new(|%args)
+}
+
 #- authors ---------------------------------------------------------------------
 my proto sub authors(|) {*}
 my multi sub authors(%json) {
-    (%json<authors> || %json<author>).map(-> $name {
-        SBOM::Contact.new(:$name, :raw-error)
-    }).List
+    (%json<authors> || %json<author>).map(&contact).List
 }
 my multi sub authors(%json, %out) {
     if authors(%json) -> @authors {
@@ -100,16 +121,18 @@ my multi sub component-hash(
 
     my $identity := build(%json);
     die "Identity '$identity' must be pinned" unless is-pinned($identity);
-    %out<purl> := PURL.from-identity($identity).Str;  # throws if invalid
+    my $purl := PURL.from-identity($identity).Str;  # throws if invalid
+    %out<bom-ref> := %out<purl> := $purl;
 
     %out<mime-type> := "text/plain";
-    %out<publisher> := %out<group> := ecosystem($identity);
+    %out<group>     := auth($identity);
+    %out<publisher> := ecosystem($identity);
 
     %out<copyright>   := $_ with %json<copyright>;
     %out<description> := $_ with %json<description>;
 
     my @externalReferences = SBOM::Reference.new(
-      :url(rakuland($identity)), :type(BEGIN ReferenceSource("website"))
+      :url(raku-land-url($identity)), :type(BEGIN ReferenceSource("website"))
     );
     with %json<source-url> -> $url {
         @externalReferences.push: SBOM::Reference.new(
@@ -133,11 +156,49 @@ my multi sub sbom-hash(IO() $io, *%in) {
 my multi sub sbom-hash(
    %json,
   :$version = 1,
+  :$all-dependencies,
   *%in
 ) {
     my %out := SBOM::CycloneDX.Hash;
 
-    %out<version>  := $version;
+    %out<version> := $version;
+
+    # Code to recursively find dependencies
+    my %components;
+    my %refs;
+    for dependencies-from-depends(%json<depends>) -> $requirement {
+
+        # Can find this
+        with meta($requirement) -> %json {
+
+            # Dependency spec may differ from identity selected
+            my $ref           := build %json;
+            %components{$ref} := component %json;
+            %refs{$ref}       := my @dependencies;
+
+            my sub fetch-dependencies($depends) {
+                for dependencies-from-depends($depends) -> $requirement {
+                    with meta($requirement) -> %json {
+                        my $ref := build %json;
+                        @dependencies.push($ref);
+
+                        # An unseen component, recurse
+                        unless %components{$ref} {
+                            %components{$ref} := component %json;
+                            fetch-dependencies(%json<depends>)
+                        }
+                    }
+                }
+            }
+            fetch-dependencies(%json<depends>);
+        }
+    }
+
+    %out<dependencies> := %refs.keys.sort.map(-> $ref {
+        SBOM::Dependency.new(:$ref, :dependsOn(%refs{$ref}))
+    }).List;
+    %out<components> := %components.sort(*.key).map(*.value).List;
+
     my $metadata := %out<metadata> := metadata(%json, |%in);
     %out<externalReferences> := $metadata.component.externalReferences;
 

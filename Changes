@@ -1,6 +1,10 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Add initial version of .META/BUILD.cdx.json file
+    - Add support for "dependencies" field
+    - Bump dependencies on Identity::Utils / SBOM::CycloneDX
+    - Add dependency on String::Utils
 
 0.0.1  2025-07-22T19:14:05+02:00
     - Initial version

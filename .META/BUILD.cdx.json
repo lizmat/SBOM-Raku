@@ -1,23 +1,9 @@
-use Test;
-use SBOM::Raku <sbom sbom-hash from-json>;
-
-my constant $version = SBOM::Raku.^ver.Str;
-my $timestamp       := DateTime.now;
-
-my $io   := $*PROGRAM.parent.sibling("META6.json");
-my $meta := $io.slurp;
-
-sub sbom-ok($sbom, $source) is test-assertion {
-    subtest "testing metadata from $source" => {
-        plan 2;
-        isa-ok $sbom, SBOM::CycloneDX;
-        is $sbom.JSON, Q:s:to|JSON|.chomp, 'did we get the correct JSON';
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "$timestamp",
+    "timestamp": "2025-07-24T22:42:42.458186+02:00",
     "lifecycles": [
       {
         "phase": "build"
@@ -32,7 +18,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
     "component": {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.2",
       "authors": [
         {
           "name": "Elizabeth Mattijsen",
@@ -42,7 +28,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "SBOM::Raku",
-      "version": "$version",
+      "version": "0.0.2",
       "description": "Raku specific SBOM functionality",
       "scope": "required",
       "licenses": [
@@ -53,10 +39,10 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
+      "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.2",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=$version",
+          "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.2",
           "type": "website"
         },
         {
@@ -378,7 +364,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
   ],
   "externalReferences": [
     {
-      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=$version",
+      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.2",
       "type": "website"
     },
     {
@@ -417,21 +403,3 @@ sub sbom-ok($sbom, $source) is test-assertion {
     }
   ]
 }
-JSON
-    }
-}
-
-plan 4;
-
-sbom-ok sbom($io, :$timestamp, :raw-error), "io";
-
-my %meta := from-json $meta, :immutable;
-sbom-ok sbom(%meta, :$timestamp, :raw-error), "io/hash";
-
-my %args := sbom-hash($io, :$timestamp, :raw-error);
-sbom-ok SBOM::CycloneDX.new(:raw-error, |%args), "io/args";
-
-%args := sbom-hash(%meta, :$timestamp, :raw-error);
-sbom-ok SBOM::CycloneDX.new(:raw-error, |%args), "meta/args";
-
-# vim: expandtab shiftwidth=4

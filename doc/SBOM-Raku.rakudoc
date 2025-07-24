@@ -51,7 +51,7 @@ it also possible to import the following subroutines from other packages,
 but which are used internally by C<SBOM::Raku>:
 
 =item JSON::Fast: from-json to-json
-=item Identity::Utils: auth build ecosystem is-pinned rakuland short-name ver
+=item Identity::Utils: auth build compunit ecosystem is-pinned raku-land-url short-name ver
 =item String::Utils: sha1
 
 =head1 SUBROUTINES

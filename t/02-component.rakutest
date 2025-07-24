@@ -13,13 +13,14 @@ sub component-ok($component, $source) is test-assertion {
 {
   "type": "library",
   "mime-type": "text/plain",
+  "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
   "authors": [
     {
       "name": "Elizabeth Mattijsen"
     }
   ],
   "publisher": "zef",
-  "group": "zef",
+  "group": "zef:lizmat",
   "name": "SBOM::Raku",
   "version": "$version",
   "description": "Raku specific SBOM functionality",

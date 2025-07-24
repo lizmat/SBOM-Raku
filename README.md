@@ -46,7 +46,7 @@ Apart from the subroutines provided by the `SBOM::Raku` distribution, it also po
 
   * JSON::Fast: from-json to-json
 
-  * Identity::Utils: auth build ecosystem is-pinned rakuland short-name ver
+  * Identity::Utils: auth build compunit ecosystem is-pinned raku-land-url short-name ver
 
   * String::Utils: sha1
 
