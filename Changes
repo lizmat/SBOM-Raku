@@ -1,6 +1,8 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Remove workaround for undefined arguments in "contact"
+    - Bump all dependences except JSON::Fast
     - Add cache for SBOM::Contact objects
     - Add bom-ref for Contact objects
 

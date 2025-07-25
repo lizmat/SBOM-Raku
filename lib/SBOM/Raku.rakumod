@@ -1,5 +1,5 @@
 use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
-use SBOM::CycloneDX:ver<0.0.8+>:auth<zef:lizmat>;
+use SBOM::CycloneDX:ver<0.0.9+>:auth<zef:lizmat>;
 
 use Identity::Utils:ver<0.0.24+>:auth<zef:lizmat> <
   auth build meta dependencies-from-depends ecosystem is-pinned
@@ -23,6 +23,7 @@ my $contact-lock := Lock.new;
 # Handle creation of an SBOM::Contact object
 my sub contact(Str:D $string) {
 
+    # Make sure checking/updating the cache is thread-safe
     $contact-lock.protect: {
         my $bom-ref := $string.subst(/ \W+ /, :global);
         return $_ with %contact{$bom-ref};
@@ -39,8 +40,9 @@ my sub contact(Str:D $string) {
             }
         }
 
-        my %args = :$bom-ref, :$name, (:email($_) with $email), :raw-error;
-        %contact{$string} := SBOM::Contact.new(|%args)
+        %contact{$string} := SBOM::Contact.new(
+          :$bom-ref, :$name, :$email, :raw-error
+        )
     }
 }
 

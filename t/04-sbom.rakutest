@@ -302,7 +302,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.8",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.9",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -312,7 +312,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "SBOM::CycloneDX",
-      "version": "0.0.8",
+      "version": "0.0.9",
       "description": "Software Bill Of Materials, CycloneDX style",
       "scope": "required",
       "licenses": [
@@ -323,10 +323,10 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.8",
+      "purl": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.9",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/SBOM::CycloneDX?v=0.0.8",
+          "url": "https://raku.land/zef:lizmat/SBOM::CycloneDX?v=0.0.9",
           "type": "website"
         },
         {
@@ -417,7 +417,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       ]
     },
     {
-      "ref": "SBOM::CycloneDX:ver<0.0.8>:auth<zef:lizmat>",
+      "ref": "SBOM::CycloneDX:ver<0.0.9>:auth<zef:lizmat>",
       "dependsOn": [
         "Email::Valid:ver<1.0.7>:auth<zef:demayl>",
         "Net::DNS:ver<1.4>:auth<zef:rbt>",
