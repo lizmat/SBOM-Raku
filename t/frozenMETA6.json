@@ -1,0 +1,33 @@
+{
+  "auth": "zef:lizmat",
+  "authors": [
+    "Elizabeth Mattijsen <liz@raku.rocks>"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+    "Identity::Utils:ver<0.0.23+>:auth<zef:lizmat>",
+    "JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>",
+    "PURL:ver<0.0.5+>:auth<zef:lizmat>",
+    "SBOM::CycloneDX:ver<0.0.8+>:auth<zef:lizmat>",
+    "String::Utils:ver<0.0.34+>:auth<zef:lizmat>"
+  ],
+  "description": "Raku specific SBOM functionality",
+  "license": "Artistic-2.0",
+  "name": "SBOM::Raku",
+  "perl": "6.d",
+  "provides": {
+    "SBOM::Raku": "lib/SBOM/Raku.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "https://github.com/lizmat/SBOM-Raku.git",
+  "tags": [
+    "SBOM",
+    "RAKU",
+    "META"
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.2"
+}
