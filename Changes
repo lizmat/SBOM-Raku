@@ -1,6 +1,8 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Add cache for SBOM::Contact objects
+    - Add bom-ref for Contact objects
 
 0.0.2  2025-07-24T22:57:45+02:00
     - Add initial version of .META/BUILD.cdx.json file

@@ -10,7 +10,8 @@ sub sbom-ok($sbom, $source) is test-assertion {
     subtest "testing metadata from $source" => {
         plan 2;
         isa-ok $sbom, SBOM::CycloneDX;
-        is $sbom.JSON, Q:s:to|JSON|.chomp, 'did we get the correct JSON';
+        my $got      := $sbom.JSON;
+        my $expected := Q:s:to|JSON|.chomp;
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
@@ -24,6 +25,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
     ],
     "authors": [
       {
+        "bom-ref": "ElizabethMattijsenlizrakurocks",
         "name": "Elizabeth Mattijsen",
         "email": "liz@raku.rocks"
       }
@@ -34,6 +36,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.2",
       "authors": [
         {
+          "bom-ref": "ElizabethMattijsenlizrakurocks",
           "name": "Elizabeth Mattijsen",
           "email": "liz@raku.rocks"
         }
@@ -85,6 +88,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "bom-ref": "pkg:raku/zef:demayl/Email::Valid@1.0.7",
       "authors": [
         {
+          "bom-ref": "DenisKanchevdenisfluxarkcom",
           "name": "Denis Kanchev",
           "email": "denis@fluxark.com"
         }
@@ -123,16 +127,17 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/Identity::Utils@0.0.23",
+      "bom-ref": "pkg:raku/zef:lizmat/Identity::Utils@0.0.24",
       "authors": [
         {
+          "bom-ref": "ElizabethMattijsen",
           "name": "Elizabeth Mattijsen"
         }
       ],
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "Identity::Utils",
-      "version": "0.0.23",
+      "version": "0.0.24",
       "description": "Provide utility functions related to distribution identities",
       "scope": "required",
       "licenses": [
@@ -143,10 +148,10 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/Identity::Utils@0.0.23",
+      "purl": "pkg:raku/zef:lizmat/Identity::Utils@0.0.24",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/Identity::Utils?v=0.0.23",
+          "url": "https://raku.land/zef:lizmat/Identity::Utils?v=0.0.24",
           "type": "website"
         },
         {
@@ -167,15 +172,19 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "bom-ref": "pkg:raku/cpan:TIMOTIMO/JSON::Fast@0.19",
       "authors": [
         {
+          "bom-ref": "TimoPaulssen",
           "name": "Timo Paulssen"
         },
         {
+          "bom-ref": "TonyODell",
           "name": "Tony O'Dell"
         },
         {
+          "bom-ref": "WenzelPPPeppmeyer",
           "name": "Wenzel P. P. Peppmeyer"
         },
         {
+          "bom-ref": "ElizabethMattijsen",
           "name": "Elizabeth Mattijsen"
         }
       ],
@@ -211,9 +220,11 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "bom-ref": "pkg:raku/zef:rbt/Net::DNS@1.4",
       "authors": [
         {
+          "bom-ref": "githubretupmoca",
           "name": "github:retupmoca"
         },
         {
+          "bom-ref": "RodTaylorrakurbtca",
           "name": "Rod Taylor",
           "email": "raku@rbt.ca"
         }
@@ -251,16 +262,17 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/PURL@0.0.5",
+      "bom-ref": "pkg:raku/zef:lizmat/PURL@0.0.6",
       "authors": [
         {
+          "bom-ref": "ElizabethMattijsen",
           "name": "Elizabeth Mattijsen"
         }
       ],
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "PURL",
-      "version": "0.0.5",
+      "version": "0.0.6",
       "description": "Package URL specification v1.0.X",
       "scope": "required",
       "licenses": [
@@ -271,10 +283,10 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/PURL@0.0.5",
+      "purl": "pkg:raku/zef:lizmat/PURL@0.0.6",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/PURL?v=0.0.5",
+          "url": "https://raku.land/zef:lizmat/PURL?v=0.0.6",
           "type": "website"
         },
         {
@@ -293,6 +305,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.8",
       "authors": [
         {
+          "bom-ref": "ElizabethMattijsen",
           "name": "Elizabeth Mattijsen"
         }
       ],
@@ -331,16 +344,17 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/String::Utils@0.0.34",
+      "bom-ref": "pkg:raku/zef:lizmat/String::Utils@0.0.35",
       "authors": [
         {
+          "bom-ref": "ElizabethMattijsen",
           "name": "Elizabeth Mattijsen"
         }
       ],
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "String::Utils",
-      "version": "0.0.34",
+      "version": "0.0.35",
       "description": "Provide some optimized string functions",
       "scope": "required",
       "licenses": [
@@ -351,10 +365,10 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/String::Utils@0.0.34",
+      "purl": "pkg:raku/zef:lizmat/String::Utils@0.0.35",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/String::Utils?v=0.0.34",
+          "url": "https://raku.land/zef:lizmat/String::Utils?v=0.0.35",
           "type": "website"
         },
         {
@@ -387,18 +401,18 @@ sub sbom-ok($sbom, $source) is test-assertion {
   ],
   "dependencies": [
     {
-      "ref": "Identity::Utils:ver<0.0.23>:auth<zef:lizmat>",
+      "ref": "Identity::Utils:ver<0.0.24>:auth<zef:lizmat>",
       "dependsOn": [
-        "String::Utils:ver<0.0.34>:auth<zef:lizmat>"
+        "String::Utils:ver<0.0.35>:auth<zef:lizmat>"
       ]
     },
     {
       "ref": "JSON::Fast:ver<0.19>:auth<cpan:TIMOTIMO>"
     },
     {
-      "ref": "PURL:ver<0.0.5>:auth<zef:lizmat>",
+      "ref": "PURL:ver<0.0.6>:auth<zef:lizmat>",
       "dependsOn": [
-        "Identity::Utils:ver<0.0.23>:auth<zef:lizmat>",
+        "Identity::Utils:ver<0.0.24>:auth<zef:lizmat>",
         "JSON::Fast:ver<0.19>:auth<cpan:TIMOTIMO>"
       ]
     },
@@ -408,15 +422,24 @@ sub sbom-ok($sbom, $source) is test-assertion {
         "Email::Valid:ver<1.0.7>:auth<zef:demayl>",
         "Net::DNS:ver<1.4>:auth<zef:rbt>",
         "JSON::Fast:ver<0.19>:auth<cpan:TIMOTIMO>",
-        "PURL:ver<0.0.5>:auth<zef:lizmat>"
+        "PURL:ver<0.0.6>:auth<zef:lizmat>"
       ]
     },
     {
-      "ref": "String::Utils:ver<0.0.34>:auth<zef:lizmat>"
+      "ref": "String::Utils:ver<0.0.35>:auth<zef:lizmat>"
     }
   ]
 }
 JSON
+        unless ok $got eq $expected, 'did we get the correct JSON' {
+            my @expected = $expected.lines;
+            for $got.lines.kv -> $i, $line {
+                if $line ne @expected[$i] {
+                    say "- @expected[$i]\n+ $line";
+                    last;
+                }
+            }
+        }
     }
 }
 

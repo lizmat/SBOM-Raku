@@ -16,6 +16,7 @@ sub component-ok($component, $source) is test-assertion {
   "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
   "authors": [
     {
+      "bom-ref": "ElizabethMattijsenlizrakurocks",
       "name": "Elizabeth Mattijsen",
       "email": "liz@raku.rocks"
     }

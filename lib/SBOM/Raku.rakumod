@@ -1,38 +1,47 @@
 use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
 use SBOM::CycloneDX:ver<0.0.8+>:auth<zef:lizmat>;
 
-use Identity::Utils:ver<0.0.23+>:auth<zef:lizmat> <
+use Identity::Utils:ver<0.0.24+>:auth<zef:lizmat> <
   auth build meta dependencies-from-depends ecosystem is-pinned
   raku-land-url short-name ver
 >;
-use SBOM::enums:ver<0.0.7+>:auth<zef:lizmat> <
+use SBOM::enums:ver<0.0.8+>:auth<zef:lizmat> <
   Acknowledgement ComponentType LicenseId Phase ReferenceSource Scope
 >;
-use SBOM::subsets:ver<0.0.7+>:auth<zef:lizmat> <
+use SBOM::subsets:ver<0.0.8+>:auth<zef:lizmat> <
   email
 >;
-use String::Utils:ver<0.0.34+>:auth<zef:lizmat> <
+use String::Utils:ver<0.0.35+>:auth<zef:lizmat> <
   sha1
 >;
-use PURL:ver<0.0.5+>:auth<zef:lizmat>;
+use PURL:ver<0.0.6+>:auth<zef:lizmat>;
 
 #- helper subs -----------------------------------------------------------------
+my %contact;
+my $contact-lock := Lock.new;
 
-my sub contact(Str:D $name is copy) {
-    my $email;
-    for $name.words -> $part {
-        if $part.starts-with('<')
-          && $part.ends-with('>')
-          && $part.substr(1, *-1) ~~ email {
-            $email := $part.substr(1, *-1);
-            $name  := $name.subst($part).trim;
-            last;
+# Handle creation of an SBOM::Contact object
+my sub contact(Str:D $string) {
+
+    $contact-lock.protect: {
+        my $bom-ref := $string.subst(/ \W+ /, :global);
+        return $_ with %contact{$bom-ref};
+
+        my $name = $string;;
+        my $email;
+        for $string.words -> $part {
+            if $part.starts-with('<')
+              && $part.ends-with('>')
+              && $part.substr(1, *-1) ~~ email {
+                $email = $part.substr(1, *-1);
+                $name  = $string.subst($part).trim;
+                last;
+            }
         }
-    }
 
-    my %args = :$name, :raw-error;
-    %args<email> := $_ with $email;
-    SBOM::Contact.new(|%args)
+        my %args = :$bom-ref, :$name, (:email($_) with $email), :raw-error;
+        %contact{$string} := SBOM::Contact.new(|%args)
+    }
 }
 
 #- authors ---------------------------------------------------------------------
