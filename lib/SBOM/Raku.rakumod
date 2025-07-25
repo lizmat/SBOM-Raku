@@ -240,6 +240,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.2>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.3>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4

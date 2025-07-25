@@ -3,7 +3,7 @@
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-07-24T22:42:42.458186+02:00",
+    "timestamp": "2025-07-25T21:17:18.201321+02:00",
     "lifecycles": [
       {
         "phase": "build"
@@ -11,6 +11,7 @@
     ],
     "authors": [
       {
+        "bom-ref": "ElizabethMattijsenlizrakurocks",
         "name": "Elizabeth Mattijsen",
         "email": "liz@raku.rocks"
       }
@@ -21,6 +22,7 @@
       "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.2",
       "authors": [
         {
+          "bom-ref": "ElizabethMattijsenlizrakurocks",
           "name": "Elizabeth Mattijsen",
           "email": "liz@raku.rocks"
         }
@@ -72,6 +74,7 @@
       "bom-ref": "pkg:raku/zef:demayl/Email::Valid@1.0.7",
       "authors": [
         {
+          "bom-ref": "DenisKanchevdenisfluxarkcom",
           "name": "Denis Kanchev",
           "email": "denis@fluxark.com"
         }
@@ -110,16 +113,17 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/Identity::Utils@0.0.22",
+      "bom-ref": "pkg:raku/zef:lizmat/Identity::Utils@0.0.24",
       "authors": [
         {
+          "bom-ref": "ElizabethMattijsen",
           "name": "Elizabeth Mattijsen"
         }
       ],
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "Identity::Utils",
-      "version": "0.0.22",
+      "version": "0.0.24",
       "description": "Provide utility functions related to distribution identities",
       "scope": "required",
       "licenses": [
@@ -130,10 +134,10 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/Identity::Utils@0.0.22",
+      "purl": "pkg:raku/zef:lizmat/Identity::Utils@0.0.24",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/Identity::Utils?v=0.0.22",
+          "url": "https://raku.land/zef:lizmat/Identity::Utils?v=0.0.24",
           "type": "website"
         },
         {
@@ -154,15 +158,19 @@
       "bom-ref": "pkg:raku/cpan:TIMOTIMO/JSON::Fast@0.19",
       "authors": [
         {
+          "bom-ref": "TimoPaulssen",
           "name": "Timo Paulssen"
         },
         {
+          "bom-ref": "TonyODell",
           "name": "Tony O'Dell"
         },
         {
+          "bom-ref": "WenzelPPPeppmeyer",
           "name": "Wenzel P. P. Peppmeyer"
         },
         {
+          "bom-ref": "ElizabethMattijsen",
           "name": "Elizabeth Mattijsen"
         }
       ],
@@ -198,9 +206,11 @@
       "bom-ref": "pkg:raku/zef:rbt/Net::DNS@1.4",
       "authors": [
         {
+          "bom-ref": "githubretupmoca",
           "name": "github:retupmoca"
         },
         {
+          "bom-ref": "RodTaylorrakurbtca",
           "name": "Rod Taylor",
           "email": "raku@rbt.ca"
         }
@@ -238,16 +248,17 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/PURL@0.0.5",
+      "bom-ref": "pkg:raku/zef:lizmat/PURL@0.0.6",
       "authors": [
         {
+          "bom-ref": "ElizabethMattijsen",
           "name": "Elizabeth Mattijsen"
         }
       ],
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "PURL",
-      "version": "0.0.5",
+      "version": "0.0.6",
       "description": "Package URL specification v1.0.X",
       "scope": "required",
       "licenses": [
@@ -258,10 +269,10 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/PURL@0.0.5",
+      "purl": "pkg:raku/zef:lizmat/PURL@0.0.6",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/PURL?v=0.0.5",
+          "url": "https://raku.land/zef:lizmat/PURL?v=0.0.6",
           "type": "website"
         },
         {
@@ -277,16 +288,17 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.8",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.9",
       "authors": [
         {
+          "bom-ref": "ElizabethMattijsen",
           "name": "Elizabeth Mattijsen"
         }
       ],
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "SBOM::CycloneDX",
-      "version": "0.0.8",
+      "version": "0.0.9",
       "description": "Software Bill Of Materials, CycloneDX style",
       "scope": "required",
       "licenses": [
@@ -297,10 +309,10 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.8",
+      "purl": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.9",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/SBOM::CycloneDX?v=0.0.8",
+          "url": "https://raku.land/zef:lizmat/SBOM::CycloneDX?v=0.0.9",
           "type": "website"
         },
         {
@@ -318,16 +330,17 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/String::Utils@0.0.34",
+      "bom-ref": "pkg:raku/zef:lizmat/String::Utils@0.0.35",
       "authors": [
         {
+          "bom-ref": "ElizabethMattijsen",
           "name": "Elizabeth Mattijsen"
         }
       ],
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "String::Utils",
-      "version": "0.0.34",
+      "version": "0.0.35",
       "description": "Provide some optimized string functions",
       "scope": "required",
       "licenses": [
@@ -338,10 +351,10 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/String::Utils@0.0.34",
+      "purl": "pkg:raku/zef:lizmat/String::Utils@0.0.35",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/String::Utils?v=0.0.34",
+          "url": "https://raku.land/zef:lizmat/String::Utils?v=0.0.35",
           "type": "website"
         },
         {
@@ -374,32 +387,32 @@
   ],
   "dependencies": [
     {
-      "ref": "Identity::Utils:ver<0.0.22>:auth<zef:lizmat>",
+      "ref": "Identity::Utils:ver<0.0.24>:auth<zef:lizmat>",
       "dependsOn": [
-        "String::Utils:ver<0.0.34>:auth<zef:lizmat>"
+        "String::Utils:ver<0.0.35>:auth<zef:lizmat>"
       ]
     },
     {
       "ref": "JSON::Fast:ver<0.19>:auth<cpan:TIMOTIMO>"
     },
     {
-      "ref": "PURL:ver<0.0.5>:auth<zef:lizmat>",
+      "ref": "PURL:ver<0.0.6>:auth<zef:lizmat>",
       "dependsOn": [
-        "Identity::Utils:ver<0.0.22>:auth<zef:lizmat>",
+        "Identity::Utils:ver<0.0.24>:auth<zef:lizmat>",
         "JSON::Fast:ver<0.19>:auth<cpan:TIMOTIMO>"
       ]
     },
     {
-      "ref": "SBOM::CycloneDX:ver<0.0.8>:auth<zef:lizmat>",
+      "ref": "SBOM::CycloneDX:ver<0.0.9>:auth<zef:lizmat>",
       "dependsOn": [
         "Email::Valid:ver<1.0.7>:auth<zef:demayl>",
         "Net::DNS:ver<1.4>:auth<zef:rbt>",
         "JSON::Fast:ver<0.19>:auth<cpan:TIMOTIMO>",
-        "PURL:ver<0.0.5>:auth<zef:lizmat>"
+        "PURL:ver<0.0.6>:auth<zef:lizmat>"
       ]
     },
     {
-      "ref": "String::Utils:ver<0.0.34>:auth<zef:lizmat>"
+      "ref": "String::Utils:ver<0.0.35>:auth<zef:lizmat>"
     }
   ]
 }
