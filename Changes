@@ -1,6 +1,8 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+
+0.0.4  2025-07-28T22:43:08+02:00
     - Provide more external references and license URL
     - Bump dependency on SBOM::CycloneDX for LicenseId.url support
     - Bump dependency on PURL for changed api semantics
