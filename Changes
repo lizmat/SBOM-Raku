@@ -1,6 +1,13 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Provide more external references and license URL
+    - Bump dependency on SBOM::CycloneDX for LicenseId.url support
+    - Bump dependency on PURL for changed api semantics
+    - Bump dependency on Identity::Utils for "distribution-name"
+    - Add dependency on OpenSSL for shaxxx subroutines
+    - Remove direct dependency on String::Utils because sha1
+      is now supplied by OpenSSL::Digest
 
 0.0.3  2025-07-25T21:17:59+02:00
     - Remove workaround for undefined arguments in "contact"

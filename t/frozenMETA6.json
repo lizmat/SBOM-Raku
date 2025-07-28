@@ -6,11 +6,11 @@
   "build-depends": [
   ],
   "depends": [
-    "Identity::Utils:ver<0.0.24+>:auth<zef:lizmat>",
+    "Identity::Utils:ver<0.0.25+>:auth<zef:lizmat>",
     "JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>",
-    "PURL:ver<0.0.6+>:auth<zef:lizmat>",
-    "SBOM::CycloneDX:ver<0.0.9+>:auth<zef:lizmat>",
-    "String::Utils:ver<0.0.35+>:auth<zef:lizmat>"
+    "OpenSSL:ver<0.2.5+>:auth<zef:raku-community-modules>",
+    "PURL:ver<0.0.8+>:auth<zef:lizmat>",
+    "SBOM::CycloneDX:ver<0.0.10+>:auth<zef:lizmat>"
   ],
   "description": "Raku specific SBOM functionality",
   "license": "Artistic-2.0",
@@ -29,5 +29,5 @@
   ],
   "test-depends": [
   ],
-  "version": "0.0.2"
+  "version": "0.0.3"
 }

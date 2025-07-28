@@ -9,7 +9,8 @@ sub component-ok($component, $source) is test-assertion {
     subtest "testing component from $source" => {
         plan 2;
         isa-ok $component, SBOM::Component;
-        is $component.JSON, Q:s:to|JSON|.chomp, 'did we get the correct JSON';
+        my $got      := $component.JSON;
+        my $expected := Q:s:to|JSON|.chomp;
 {
   "type": "library",
   "mime-type": "text/plain",
@@ -31,7 +32,8 @@ sub component-ok($component, $source) is test-assertion {
     {
       "license": {
         "id": "Artistic-2.0",
-        "acknowledgement": "declared"
+        "acknowledgement": "declared",
+        "url": "https://spdx.org/licenses/Artistic-2.0.json"
       }
     }
   ],
@@ -39,11 +41,23 @@ sub component-ok($component, $source) is test-assertion {
   "externalReferences": [
     {
       "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=$version",
-      "type": "website"
+      "type": "documentation"
     },
     {
-      "url": "https://github.com/lizmat/SBOM-Raku.git",
+      "url": "https://github.com/lizmat/SBOM-Raku",
+      "type": "distribution"
+    },
+    {
+      "url": "https://github.com/lizmat/SBOM-Raku/issues",
+      "type": "issue-tracker"
+    },
+    {
+      "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/$version.zip",
       "type": "source-distribution"
+    },
+    {
+      "url": "https://spdx.org/licenses/Artistic-2.0.json",
+      "type": "license"
     }
   ],
   "tags": [
@@ -53,6 +67,15 @@ sub component-ok($component, $source) is test-assertion {
   ]
 }
 JSON
+        unless ok $got eq $expected, 'did we get the correct JSON' {
+            my @expected = $expected.lines;
+            for $got.lines.kv -> $i, $line {
+                if $line ne @expected[$i] {
+                    say "- @expected[$i]\n+ $line";
+                    last;
+                }
+            }
+        }
     }
 }
 

@@ -1,20 +1,18 @@
 use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
-use SBOM::CycloneDX:ver<0.0.9+>:auth<zef:lizmat>;
+use OpenSSL::Digest:ver<0.2.5+>:auth<zef:raku-community-modules>;
+use SBOM::CycloneDX:ver<0.0.10+>:auth<zef:lizmat>;
 
-use Identity::Utils:ver<0.0.24+>:auth<zef:lizmat> <
-  auth build meta dependencies-from-depends ecosystem is-pinned
-  raku-land-url short-name ver
+use Identity::Utils:ver<0.0.25+>:auth<zef:lizmat> <
+  auth build meta dependencies-from-depends distribution-name
+  ecosystem is-pinned raku-land-url short-name ver
 >;
-use SBOM::enums:ver<0.0.8+>:auth<zef:lizmat> <
+use SBOM::enums:ver<0.0.10+>:auth<zef:lizmat> <
   Acknowledgement ComponentType LicenseId Phase ReferenceSource Scope
 >;
-use SBOM::subsets:ver<0.0.8+>:auth<zef:lizmat> <
+use SBOM::subsets:ver<0.0.10+>:auth<zef:lizmat> <
   email
 >;
-use String::Utils:ver<0.0.35+>:auth<zef:lizmat> <
-  sha1
->;
-use PURL:ver<0.0.6+>:auth<zef:lizmat>;
+use PURL:ver<0.0.8+>:auth<zef:lizmat>;
 
 #- helper subs -----------------------------------------------------------------
 my %contact;
@@ -66,7 +64,8 @@ my multi sub licenses(%json) {
     with %json<license> {
         my %args = acknowledgement => BEGIN Acknowledgement("declared");
         with try LicenseId($_) -> $id {
-            %args<id> := $id;
+            %args<id>  := $id;
+            %args<url> := $_ with $id.url;
         }
         else {
             %args<name> := $_;
@@ -143,12 +142,34 @@ my multi sub component-hash(
     %out<description> := $_ with %json<description>;
 
     my @externalReferences = SBOM::Reference.new(
-      :url(raku-land-url($identity)), :type(BEGIN ReferenceSource("website"))
+      :url(raku-land-url($identity)),
+      :type(BEGIN ReferenceSource("documentation"))
     );
-    with %json<source-url> -> $url {
+    with %json<source-url> -> $url is copy {
+        $url .= subst(".git");
+
         @externalReferences.push: SBOM::Reference.new(
-          :$url, :type(BEGIN ReferenceSource("source-distribution"))
+          :$url, :type(BEGIN ReferenceSource("distribution"))
         );
+
+        if $url.starts-with("https://github.com/") {
+
+            @externalReferences.push: SBOM::Reference.new(
+              :url("$url/issues"),
+              :type(BEGIN ReferenceSource("issue-tracker"))
+            );
+
+            @externalReferences.push: SBOM::Reference.new(
+              :url("$url/archive/refs/tags/%out<version>.zip"),
+              :type(BEGIN ReferenceSource("source-distribution"))
+            );
+        }
+    }
+    with %out<licenses> -> @licenses {
+        @externalReferences.push: SBOM::Reference.new(
+          :url(.license.url),
+          :type(BEGIN ReferenceSource("license"))
+        ) for @licenses;
     }
     %out<externalReferences> := @externalReferences.List;
 
@@ -158,11 +179,13 @@ my multi sub component-hash(
 }
 
 #- sbom ------------------------------------------------------------------------
-my sub sbom(|c) { SBOM::CycloneDX.new: |sbom-hash(|c), :raw-error }
+my sub sbom(Any:D $source, *%_) {
+    SBOM::CycloneDX.new: |sbom-hash($source, |%_), :raw-error
+}
 
 my proto sub sbom-hash(|) {*}
-my multi sub sbom-hash(IO() $io, *%in) {
-    sbom-hash from-json($io.slurp, :immutable), |%in
+my multi sub sbom-hash(IO() $io, *%_) {
+    sbom-hash from-json($io.slurp, :immutable), |%_
 }
 my multi sub sbom-hash(
    %json,
@@ -240,6 +263,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.3>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.4>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4
