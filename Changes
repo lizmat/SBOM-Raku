@@ -1,6 +1,8 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Modernize META6.json
+    - Bump dependencies on SBOM::CycloneDX and PURL
 
 0.0.4  2025-07-28T22:43:08+02:00
     - Provide more external references and license URL
