@@ -2,7 +2,7 @@ use Test;
 use SBOM::Raku <metadata metadata-hash from-json>;
 
 my constant $version = SBOM::Raku.^ver.Str;
-my $timestamp       := DateTime.now.Str.subst("Z","+00:00");
+my $timestamp       := DateTime.new(now.Int).Str.subst("Z","+00:00");
 
 my $io   := $*PROGRAM.parent.sibling("META6.json");
 my $meta := $io.slurp;
@@ -17,14 +17,13 @@ sub metadata-ok($metadata, $source) is test-assertion {
   "timestamp": "$timestamp",
   "lifecycles": [
     {
-      "phase": "build"
+      "phase": "pre-build"
     }
   ],
   "authors": [
     {
-      "bom-ref": "ElizabethMattijsenlizrakurocks",
-      "name": "Elizabeth Mattijsen",
-      "email": "liz@raku.rocks"
+      "bom-ref": "ElizabethMattijsen",
+      "name": "Elizabeth Mattijsen"
     }
   ],
   "component": {
@@ -33,9 +32,8 @@ sub metadata-ok($metadata, $source) is test-assertion {
     "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
     "authors": [
       {
-        "bom-ref": "ElizabethMattijsenlizrakurocks",
-        "name": "Elizabeth Mattijsen",
-        "email": "liz@raku.rocks"
+        "bom-ref": "ElizabethMattijsen",
+        "name": "Elizabeth Mattijsen"
       }
     ],
     "publisher": "zef",
@@ -60,12 +58,16 @@ sub metadata-ok($metadata, $source) is test-assertion {
         "type": "documentation"
       },
       {
-        "url": "https://github.com/lizmat/SBOM-Raku",
-        "type": "distribution"
+        "url": "mailto:liz@raku.rocks",
+        "type": "support"
       },
       {
         "url": "https://github.com/lizmat/SBOM-Raku/issues",
         "type": "issue-tracker"
+      },
+      {
+        "url": "https://github.com/lizmat/SBOM-Raku",
+        "type": "distribution"
       },
       {
         "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/$version.zip",

@@ -1,6 +1,7 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Properly handle "support" section in META6.json
     - Modernize META6.json
     - Bump dependencies on SBOM::CycloneDX and PURL
 

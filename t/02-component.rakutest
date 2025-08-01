@@ -17,9 +17,8 @@ sub component-ok($component, $source) is test-assertion {
   "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
   "authors": [
     {
-      "bom-ref": "ElizabethMattijsenlizrakurocks",
-      "name": "Elizabeth Mattijsen",
-      "email": "liz@raku.rocks"
+      "bom-ref": "ElizabethMattijsen",
+      "name": "Elizabeth Mattijsen"
     }
   ],
   "publisher": "zef",
@@ -44,12 +43,16 @@ sub component-ok($component, $source) is test-assertion {
       "type": "documentation"
     },
     {
-      "url": "https://github.com/lizmat/SBOM-Raku",
-      "type": "distribution"
+      "url": "mailto:liz@raku.rocks",
+      "type": "support"
     },
     {
       "url": "https://github.com/lizmat/SBOM-Raku/issues",
       "type": "issue-tracker"
+    },
+    {
+      "url": "https://github.com/lizmat/SBOM-Raku",
+      "type": "distribution"
     },
     {
       "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/$version.zip",

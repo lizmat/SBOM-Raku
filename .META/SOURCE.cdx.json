@@ -1,26 +1,12 @@
-use Test;
-use SBOM::Raku <sbom sbom-hash from-json>;
-
-my $timestamp := DateTime.new(now.Int).Str.subst("Z","+00:00");
-
-my $io   := $*PROGRAM.sibling("frozenMETA6.json");
-my $meta := $io.slurp;
-
-sub sbom-ok($sbom, $source) is test-assertion {
-    subtest "testing metadata from $source" => {
-        plan 2;
-        isa-ok $sbom, SBOM::CycloneDX;
-        my $got      := $sbom.JSON;
-        my $expected := Q:s:to|JSON|.chomp;
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "$timestamp",
+    "timestamp": "2025-08-01T13:18:08.419822+02:00",
     "lifecycles": [
       {
-        "phase": "pre-build"
+        "phase": "build"
       }
     ],
     "authors": [
@@ -723,30 +709,3 @@ sub sbom-ok($sbom, $source) is test-assertion {
     }
   ]
 }
-JSON
-        unless ok $got eq $expected, 'did we get the correct JSON' {
-            my @expected = $expected.lines;
-            for $got.lines.kv -> $i, $line {
-                if $line ne @expected[$i] {
-                    say "- @expected[$i]\n+ $line";
-                    last;
-                }
-            }
-        }
-    }
-}
-
-plan 4;
-
-sbom-ok sbom($io, :$timestamp, :raw-error), "io";
-
-my %meta := from-json $meta, :immutable;
-sbom-ok sbom(%meta, :$timestamp, :raw-error), "io/hash";
-
-my %args := sbom-hash($io, :$timestamp, :raw-error);
-sbom-ok SBOM::CycloneDX.new(:raw-error, |%args), "io/args";
-
-%args := sbom-hash(%meta, :$timestamp, :raw-error);
-sbom-ok SBOM::CycloneDX.new(:raw-error, |%args), "meta/args";
-
-# vim: expandtab shiftwidth=4

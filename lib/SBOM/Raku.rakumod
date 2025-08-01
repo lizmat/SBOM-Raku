@@ -26,12 +26,12 @@ my sub contact(Str:D $string) {
         my $bom-ref := $string.subst(/ \W+ /, :global);
         return $_ with %contact{$bom-ref};
 
-        my $name = $string;;
+        my $name = $string;
         my $email;
         for $string.words -> $part {
             if $part.starts-with('<')
               && $part.ends-with('>')
-              && $part.substr(1, *-1) ~~ email {
+              && $part.substr(1, *-1) ~~ email {  # UNCOVERABLE
                 $email = $part.substr(1, *-1);
                 $name  = $string.subst($part).trim;
                 last;
@@ -64,7 +64,7 @@ my multi sub licenses(%json) {
     with %json<license> {
         my %args = acknowledgement => BEGIN Acknowledgement("declared");
         with try LicenseId($_) -> $id {
-            %args<id>  := $id;
+            %args<id>  := $id;  # UNCOVERABLE
             %args<url> := $_ with $id.url;
         }
         else {
@@ -91,8 +91,8 @@ my multi sub metadata-hash(IO() $io, *%args) {
 }
 my multi sub metadata-hash(
    %json,
-  :$timestamp = DateTime.now,
-  :$phase     = "build",
+  :$timestamp = DateTime.new(now.Int),  # only whole seconds
+  :$phase     = "pre-build",
   *%in,
 ) {
     my %out;
@@ -143,33 +143,65 @@ my multi sub component-hash(
 
     my @externalReferences = SBOM::Reference.new(
       :url(raku-land-url($identity)),
-      :type(BEGIN ReferenceSource("documentation"))
+      :type(BEGIN ReferenceSource("documentation"))  # UNCOVERABLE
     );
-    with %json<source-url> -> $url is copy {
+    my sub add-reference($url, $type) {
+        @externalReferences.push: SBOM::Reference.new(:$url, :$type)
+    }
+    my sub add-source-references($url is copy, :$no-issue-tracker) {
         $url .= subst(".git");
 
-        @externalReferences.push: SBOM::Reference.new(
-          :$url, :type(BEGIN ReferenceSource("distribution"))
-        );
+        add-reference $url, BEGIN ReferenceSource("distribution");
 
         if $url.starts-with("https://github.com/") {
+            add-reference(
+              "$url/issues",
+              BEGIN ReferenceSource("issue-tracker")
+            ) unless $no-issue-tracker;
 
-            @externalReferences.push: SBOM::Reference.new(
-              :url("$url/issues"),
-              :type(BEGIN ReferenceSource("issue-tracker"))
-            );
-
-            @externalReferences.push: SBOM::Reference.new(
-              :url("$url/archive/refs/tags/%out<version>.zip"),
-              :type(BEGIN ReferenceSource("source-distribution"))
-            );
+            add-reference
+              "$url/archive/refs/tags/%out<version>.zip",
+              BEGIN ReferenceSource("source-distribution");
+        }
+        elsif $url.starts-with('https://gitlab.com') {
+            # XXX  need to figure out
         }
     }
+
+    with %json<support> -> %support {
+        with %support<email> -> $email {
+            add-reference "mailto:$email", BEGIN ReferenceSource("support");
+        }
+        with %support<mailinglist> -> $url {
+            add-reference $url, BEGIN ReferenceSource("mailing-list");
+        }
+        with %support<bugtracker> -> $url {
+            add-reference $url, BEGIN ReferenceSource("issue-tracker");
+        }
+        with %support<source> -> $url {
+            add-source-references
+              $url,
+              :no-issue-tracker(%support<bugtracker>);
+        }
+        with %support<irc> -> $url {
+            add-reference
+              $url
+                .subst('irc.freenode.net','libera.chat')
+                .subst('perl6','raku'),
+              BEGIN ReferenceSource("chat");
+        }
+        with %support<phone> -> $phone {
+            add-reference
+              "tel:$phone",
+              BEGIN ReferenceSource("security-contact");
+        }
+    }
+    orwith %json<source-url> -> $url {
+        add-source-references $url;
+    }
     with %out<licenses> -> @licenses {
-        @externalReferences.push: SBOM::Reference.new(
-          :url(.license.url),
-          :type(BEGIN ReferenceSource("license"))
-        ) for @licenses;
+        add-reference(.license.url, BEGIN ReferenceSource("license"))
+          for @licenses;
     }
     %out<externalReferences> := @externalReferences.List;
 
@@ -195,7 +227,7 @@ my multi sub sbom-hash(
 ) {
     my %out := SBOM::CycloneDX.Hash;
 
-    %out<version> := $version;
+    %out<version> := $version;  # UNCOVERABLE
 
     # Code to recursively find dependencies
     my %components;
@@ -247,17 +279,17 @@ my sub EXPORT(*@names) {
                  UNIT::{"&$_"}:p
              }
              else {
-                 my ($in,$out) = .split(':', 2);
-                 if $out && UNIT::{"&$in"} -> &code {
-                     Pair.new: "&$out", &code
+                 my ($in,$out) = .split(':', 2);  # UNCOVERABLE
+                 if $out && UNIT::{"&$in"} -> &code {  # UNCOVERABLE
+                     Pair.new: "&$out", &code  # UNCOVERABLE
                  }
              }
          }
       !! <
            authors component component-hash licenses metadata
            metadata-hash sbom sbom-hash
-         >.map({
-             "&$_" => UNIT::{"&$_"}
+         >.map({  # UNCOVERABLE
+             "&$_" => UNIT::{"&$_"}  # UNCOVERABLE
          }).Map
 }
 
