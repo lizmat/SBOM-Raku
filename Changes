@@ -1,6 +1,8 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+
+0.0.5  2025-08-01T22:14:15+02:00
     - Add "source-sbom" script that creates/updates the source
       SBOM associated with a META6.json file
     - Add "tools" section to metadata, using the component
