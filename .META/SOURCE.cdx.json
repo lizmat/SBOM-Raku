@@ -3,7 +3,7 @@
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-08-01T17:17:43+00:00",
+    "timestamp": "2025-08-01T20:10:56+00:00",
     "lifecycles": [
       {
         "phase": "pre-build"
@@ -18,7 +18,7 @@
     "component": {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.4",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.5",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -28,7 +28,7 @@
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "SBOM::Raku",
-      "version": "0.0.4",
+      "version": "0.0.5",
       "description": "Raku specific SBOM functionality",
       "scope": "required",
       "licenses": [
@@ -40,10 +40,10 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.4",
+      "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.5",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.4",
+          "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.5",
           "type": "documentation"
         },
         {
@@ -59,7 +59,7 @@
           "type": "distribution"
         },
         {
-          "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.4.zip",
+          "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.5.zip",
           "type": "source-distribution"
         },
         {
@@ -429,7 +429,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/PURL@0.0.12",
+      "bom-ref": "pkg:raku/zef:lizmat/PURL@0.0.13",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -439,7 +439,7 @@
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "PURL",
-      "version": "0.0.12",
+      "version": "0.0.13",
       "description": "Package URL specification v1.0.X",
       "scope": "required",
       "licenses": [
@@ -451,10 +451,10 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/PURL@0.0.12",
+      "purl": "pkg:raku/zef:lizmat/PURL@0.0.13",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/PURL?v=0.0.12",
+          "url": "https://raku.land/zef:lizmat/PURL?v=0.0.13",
           "type": "documentation"
         },
         {
@@ -470,7 +470,7 @@
           "type": "distribution"
         },
         {
-          "url": "https://github.com/lizmat/PURL/archive/refs/tags/0.0.12.zip",
+          "url": "https://github.com/lizmat/PURL/archive/refs/tags/0.0.13.zip",
           "type": "source-distribution"
         },
         {
@@ -658,7 +658,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/VERS@0.0.1",
+      "bom-ref": "pkg:raku/zef:lizmat/VERS@0.0.2",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsenlizrakurocks",
@@ -669,7 +669,7 @@
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "VERS",
-      "version": "0.0.1",
+      "version": "0.0.2",
       "description": "Support for the VErsion Range Specifier URI scheme",
       "scope": "required",
       "licenses": [
@@ -681,10 +681,10 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/VERS@0.0.1",
+      "purl": "pkg:raku/zef:lizmat/VERS@0.0.2",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/VERS?v=0.0.1",
+          "url": "https://raku.land/zef:lizmat/VERS?v=0.0.2",
           "type": "documentation"
         },
         {
@@ -696,7 +696,7 @@
           "type": "issue-tracker"
         },
         {
-          "url": "https://github.com/lizmat/VERS/archive/refs/tags/0.0.1.zip",
+          "url": "https://github.com/lizmat/VERS/archive/refs/tags/0.0.2.zip",
           "type": "source-distribution"
         },
         {
@@ -714,7 +714,7 @@
   ],
   "externalReferences": [
     {
-      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.4",
+      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.5",
       "type": "documentation"
     },
     {
@@ -730,7 +730,7 @@
       "type": "distribution"
     },
     {
-      "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.4.zip",
+      "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.5.zip",
       "type": "source-distribution"
     },
     {
@@ -752,12 +752,12 @@
       "ref": "OpenSSL:ver<0.2.5>:auth<zef:raku-community-modules>"
     },
     {
-      "ref": "PURL:ver<0.0.12>:auth<zef:lizmat>",
+      "ref": "PURL:ver<0.0.13>:auth<zef:lizmat>",
       "dependsOn": [
         "Identity::Utils:ver<0.0.25>:auth<zef:lizmat>",
         "JSON::Fast:ver<0.19>:auth<cpan:TIMOTIMO>",
         "URI::Encode:ver<1.0>:auth<zef:raku-community-modules>",
-        "VERS:ver<0.0.1>:auth<zef:lizmat>"
+        "VERS:ver<0.0.2>:auth<zef:lizmat>"
       ]
     },
     {
@@ -766,7 +766,7 @@
         "Email::Valid:ver<1.0.7>:auth<zef:demayl>",
         "Net::DNS:ver<1.4>:auth<zef:rbt>",
         "JSON::Fast:ver<0.19>:auth<cpan:TIMOTIMO>",
-        "PURL:ver<0.0.12>:auth<zef:lizmat>"
+        "PURL:ver<0.0.13>:auth<zef:lizmat>"
       ]
     }
   ]

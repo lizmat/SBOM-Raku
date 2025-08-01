@@ -12,7 +12,7 @@ use SBOM::enums:ver<0.0.10+>:auth<zef:lizmat> <
 use SBOM::subsets:ver<0.0.10+>:auth<zef:lizmat> <
   email
 >;
-use PURL:ver<0.0.8+>:auth<zef:lizmat>;
+use PURL:ver<0.0.13+>:auth<zef:lizmat>;
 
 #- helper subs -----------------------------------------------------------------
 my %contact;
@@ -304,6 +304,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.4>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.5>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4
