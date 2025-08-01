@@ -11,7 +11,7 @@ SYNOPSIS
 ```raku
 use SBOM::Raku;
 
-say sbom("META6.json").JSON;
+say source-sbom("META6.json").JSON;
 # {
 #   "bomFormat": "CycloneDX",
 #   "specVersion": "1.6",
@@ -137,11 +137,11 @@ The `metadata-hash` subroutine returns a hash in the format needed to create an 
 
 It's main intended use is to be able to tweak the arguments prior to making an `SBOM::Metadata` object.
 
-sbom
-----
+source-sbom
+-----------
 
 ```raku
-say sbom("META6.json").JSON;
+say source-sbom("META6.json").JSON;
 # {
 #   "bomFormat": "CycloneDX",
 #   "specVersion": "1.6",
@@ -151,23 +151,23 @@ say sbom("META6.json").JSON;
 # ...
 
 my %meta-json = ...;
-my $sbom = sbom(%meta-json);
+my $sbom = source-sbom(%meta-json);
 ```
 
-The `sbom` subroutine returns a [SBOM::CycloneDX](https://raku.land/zef:lizmat/SBOM::CycloneDX#sbomcyclonedx) for the given arguments.
+The `source-sbom` subroutine returns a [SBOM::CycloneDX](https://raku.land/zef:lizmat/SBOM::CycloneDX#sbomcyclonedx) for the given arguments.
 
 The arguments can be either an `IO::Path` object (or a string that can be coerced to an `IO::Path`) to a file that contains Raku module meta information (usually called `META6.json`). Or a hash with arguments (in the `META6.json` format) to build an `SBOM::CycloneDX` object with.
 
-sbom-hash
----------
+source-sbom-hash
+----------------
 
 ```raku
-my %args := sbom-hash("META6.json");
+my %args := source-sbom-hash("META6.json");
 # ... perform tweaks
 my $sbom = SBOM::CycloneDX.new(|%args);
 ```
 
-The `sbom-hash` subroutine returns a hash in the format needed to create an `SBOM::CycloneDX` object with, from a `META6.json` file (or a hash of that representation).
+The `source-sbom-hash` subroutine returns a hash in the format needed to create an `SBOM::CycloneDX` object with, from a `META6.json` file (or a hash of that representation).
 
 It's main intended use is to be able to tweak the arguments prior to making an `SBOM::CycloneDX` object.
 

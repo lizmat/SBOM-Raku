@@ -20,16 +20,17 @@
   "license": "Artistic-2.0",
   "name": "SBOM::Raku",
   "perl": "6.d",
-  "raku": "6.d",
   "production": true,
   "provides": {
     "SBOM::Raku": "lib/SBOM/Raku.rakumod"
   },
+  "raku": "6.d",
   "resources": [
   ],
+  "source-url": "https://github.com/lizmat/SBOM-Raku.git",
   "support": {
-    "email": "liz@raku.rocks",
     "bugtracker": "https://github.com/lizmat/SBOM-Raku/issues",
+    "email": "liz@raku.rocks",
     "source": "https://github.com/lizmat/SBOM-Raku.git"
   },
   "tags": [

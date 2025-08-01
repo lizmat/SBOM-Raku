@@ -1,5 +1,5 @@
 use Test;
-use SBOM::Raku <sbom sbom-hash from-json>;
+use SBOM::Raku <source-sbom source-sbom-hash from-json>;
 
 my $timestamp := DateTime.new(now.Int).Str.subst("Z","+00:00");
 
@@ -738,15 +738,15 @@ JSON
 
 plan 4;
 
-sbom-ok sbom($io, :$timestamp, :raw-error), "io";
+sbom-ok source-sbom($io, :$timestamp, :raw-error), "io";
 
 my %meta := from-json $meta, :immutable;
-sbom-ok sbom(%meta, :$timestamp, :raw-error), "io/hash";
+sbom-ok source-sbom(%meta, :$timestamp, :raw-error), "io/hash";
 
-my %args := sbom-hash($io, :$timestamp, :raw-error);
+my %args := source-sbom-hash($io, :$timestamp, :raw-error);
 sbom-ok SBOM::CycloneDX.new(:raw-error, |%args), "io/args";
 
-%args := sbom-hash(%meta, :$timestamp, :raw-error);
+%args := source-sbom-hash(%meta, :$timestamp, :raw-error);
 sbom-ok SBOM::CycloneDX.new(:raw-error, |%args), "meta/args";
 
 # vim: expandtab shiftwidth=4

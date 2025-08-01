@@ -210,16 +210,16 @@ my multi sub component-hash(
     %out
 }
 
-#- sbom ------------------------------------------------------------------------
-my sub sbom(Any:D $source, *%_) {
-    SBOM::CycloneDX.new: |sbom-hash($source, |%_), :raw-error
+#- source-sbom -----------------------------------------------------------------
+my sub source-sbom(Any:D $source, *%_) {
+    SBOM::CycloneDX.new: |source-sbom-hash($source, |%_), :raw-error
 }
 
-my proto sub sbom-hash(|) {*}
-my multi sub sbom-hash(IO() $io, *%_) {
-    sbom-hash from-json($io.slurp, :immutable), |%_
+my proto sub source-sbom-hash(|) {*}
+my multi sub source-sbom-hash(IO() $io, *%_) {
+    source-sbom-hash from-json($io.slurp, :immutable), |%_
 }
-my multi sub sbom-hash(
+my multi sub source-sbom-hash(
    %json,
   :$version = 1,
   :$all-dependencies,
@@ -287,7 +287,7 @@ my sub EXPORT(*@names) {
          }
       !! <
            authors component component-hash licenses metadata
-           metadata-hash sbom sbom-hash
+           metadata-hash source-sbom source-sbom-hash
          >.map({  # UNCOVERABLE
              "&$_" => UNIT::{"&$_"}  # UNCOVERABLE
          }).Map

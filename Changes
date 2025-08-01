@@ -1,6 +1,9 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Rename "sbom" and "sbom-hash" to "source-sbom" and
+      "source-sbom-hash" to separate this functionality from
+      later "dist-sbom" logic
     - Properly handle "support" section in META6.json
     - Modernize META6.json
     - Bump dependencies on SBOM::CycloneDX and PURL
