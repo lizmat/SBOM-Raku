@@ -3,10 +3,10 @@
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-08-01T13:18:08.419822+02:00",
+    "timestamp": "2025-08-01T17:17:43+00:00",
     "lifecycles": [
       {
-        "phase": "build"
+        "phase": "pre-build"
       }
     ],
     "authors": [
@@ -81,7 +81,69 @@
           "url": "https://spdx.org/licenses/Artistic-2.0.json"
         }
       }
-    ]
+    ],
+    "tools": {
+      "components": [
+        {
+          "type": "library",
+          "mime-type": "text/plain",
+          "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.4",
+          "authors": [
+            {
+              "bom-ref": "ElizabethMattijsen",
+              "name": "Elizabeth Mattijsen"
+            }
+          ],
+          "publisher": "zef",
+          "group": "zef:lizmat",
+          "name": "SBOM::Raku",
+          "version": "0.0.4",
+          "description": "Raku specific SBOM functionality",
+          "scope": "required",
+          "licenses": [
+            {
+              "license": {
+                "id": "Artistic-2.0",
+                "acknowledgement": "declared",
+                "url": "https://spdx.org/licenses/Artistic-2.0.json"
+              }
+            }
+          ],
+          "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.4",
+          "externalReferences": [
+            {
+              "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.4",
+              "type": "documentation"
+            },
+            {
+              "url": "mailto:liz@raku.rocks",
+              "type": "support"
+            },
+            {
+              "url": "https://github.com/lizmat/SBOM-Raku/issues",
+              "type": "issue-tracker"
+            },
+            {
+              "url": "https://github.com/lizmat/SBOM-Raku",
+              "type": "distribution"
+            },
+            {
+              "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.4.zip",
+              "type": "source-distribution"
+            },
+            {
+              "url": "https://spdx.org/licenses/Artistic-2.0.json",
+              "type": "license"
+            }
+          ],
+          "tags": [
+            "SBOM",
+            "RAKU",
+            "META"
+          ]
+        }
+      ]
+    }
   },
   "components": [
     {

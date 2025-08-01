@@ -20,9 +20,9 @@ my $contact-lock := Lock.new;
 
 # Handle creation of an SBOM::Contact object
 my sub contact(Str:D $string) {
-
-    # Make sure checking/updating the cache is thread-safe
-    $contact-lock.protect: {
+    
+    # Produce a Contact object
+    my sub produce-contact() {
         my $bom-ref := $string.subst(/ \W+ /, :global);
         return $_ with %contact{$bom-ref};
 
@@ -42,6 +42,11 @@ my sub contact(Str:D $string) {
           :$bom-ref, :$name, :$email, :raw-error
         )
     }
+
+    # Make sure checking/updating the cache is thread-safe
+    $contact-lock
+      ?? $contact-lock.protect: &produce-contact
+      !! produce-contact
 }
 
 #- authors ---------------------------------------------------------------------
@@ -80,30 +85,6 @@ my multi sub licenses(%json) {
 }
 my multi sub licenses(%json, %out) {
     %out<licenses> := licenses(%json)
-}
-
-#- metadata --------------------------------------------------------------------
-my sub metadata(|c) { SBOM::Metadata.new: |metadata-hash(|c), :raw-error }
-
-my proto sub metadata-hash(|) {*}
-my multi sub metadata-hash(IO() $io, *%args) {
-    metadata-hash from-json($io.slurp, :immutable), |%args
-}
-my multi sub metadata-hash(
-   %json,
-  :$timestamp = DateTime.new(now.Int),  # only whole seconds
-  :$phase     = "pre-build",
-  *%in,
-) {
-    my %out;
-    %out<timestamp>  := $timestamp;
-    %out<lifecycles> := (SBOM::Lifecycle.new(:$phase),);
-
-    my $component  := %out<component> := component(%json, |%in);
-    %out<authors>  := $_ with $component.authors;
-    %out<licenses> := $_ with $component.licenses;
-
-    %out
 }
 
 #- component -------------------------------------------------------------------
@@ -206,6 +187,34 @@ my multi sub component-hash(
     %out<externalReferences> := @externalReferences.List;
 
     %out<tags> := %json<tags> // ();
+
+    %out
+}
+
+
+#- metadata --------------------------------------------------------------------
+BEGIN my $tools = SBOM::Tool.new(:components(component($?DISTRIBUTION.meta),));
+
+my sub metadata(|c) { SBOM::Metadata.new: |metadata-hash(|c), :raw-error }
+
+my proto sub metadata-hash(|) {*}
+my multi sub metadata-hash(IO() $io, *%args) {
+    metadata-hash from-json($io.slurp, :immutable), |%args
+}
+my multi sub metadata-hash(
+   %json,
+  :$timestamp = DateTime.new(now.Int),  # only whole seconds
+  :$phase     = "pre-build",
+  *%in,
+) {
+    my %out;
+    %out<timestamp>  := $timestamp;
+    %out<lifecycles> := (SBOM::Lifecycle.new(:$phase),);
+    %out<tools>      := $tools;
+
+    my $component  := %out<component> := component(%json, |%in);
+    %out<authors>  := $_ with $component.authors;
+    %out<licenses> := $_ with $component.licenses;
 
     %out
 }

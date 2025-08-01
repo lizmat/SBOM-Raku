@@ -1,6 +1,10 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Add "source-sbom" script that creates/updates the source
+      SBOM associated with a META6.json file
+    - Add "tools" section to metadata, using the component
+      representing SBOM::Raku itself
     - Rename "sbom" and "sbom-hash" to "source-sbom" and
       "source-sbom-hash" to separate this functionality from
       later "dist-sbom" logic

@@ -26,6 +26,17 @@ DESCRIPTION
 
 The `SBOM::Raku` distribution provides logic for the creation and maintenance of SBOM (Software Bill Of Materials) files in the Raku Programming Language context.
 
+SCRIPTS
+=======
+
+source-sbom
+-----------
+
+    $ source-sbom META6.json
+    Created 1 source SBOM
+
+The `source-sbom` script expects at least one "META6.json" file to be specified. It will try to create source SBOM files for each of the "META6.json" files specified in tyeir sibling directory `.META`. If this is a newly created file, an attempt will be made to add it to the repository in which it is residing.
+
 SELECTIVE IMPORTING
 ===================
 
