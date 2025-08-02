@@ -11,8 +11,8 @@
         "Identity::Utils:ver<0.0.25+>:auth<zef:lizmat>",
         "JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>",
         "OpenSSL:ver<0.2.5+>:auth<zef:raku-community-modules>",
-        "PURL:ver<0.0.13+>:auth<zef:lizmat>",
-        "SBOM::CycloneDX:ver<0.0.11+>:auth<zef:lizmat>"
+        "PURL:ver<0.0.14+>:auth<zef:lizmat>",
+        "SBOM::CycloneDX:ver<0.0.12+>:auth<zef:lizmat>"
       ]
     }
   },

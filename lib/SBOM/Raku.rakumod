@@ -1,18 +1,18 @@
 use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
 use OpenSSL::Digest:ver<0.2.5+>:auth<zef:raku-community-modules>;
-use SBOM::CycloneDX:ver<0.0.10+>:auth<zef:lizmat>;
+use PURL:ver<0.0.14+>:auth<zef:lizmat>;
+use SBOM::CycloneDX:ver<0.0.12+>:auth<zef:lizmat>;
 
 use Identity::Utils:ver<0.0.25+>:auth<zef:lizmat> <
   auth build meta dependencies-from-depends distribution-name
   ecosystem is-pinned raku-land-url short-name ver
 >;
-use SBOM::enums:ver<0.0.10+>:auth<zef:lizmat> <
+use SBOM::enums:ver<0.0.12+>:auth<zef:lizmat> <
   Acknowledgement ComponentType LicenseId Phase ReferenceSource Scope
 >;
-use SBOM::subsets:ver<0.0.10+>:auth<zef:lizmat> <
+use SBOM::subsets:ver<0.0.12+>:auth<zef:lizmat> <
   email
 >;
-use PURL:ver<0.0.13+>:auth<zef:lizmat>;
 
 #- helper subs -----------------------------------------------------------------
 my %contact;
@@ -238,6 +238,8 @@ my multi sub source-sbom-hash(
 
     %out<version> := $version;  # UNCOVERABLE
 
+    my sub purlize($requirement) { PURL.from-identity($requirement).Str }
+
     # Code to recursively find dependencies
     my %components;
     my %refs;
@@ -245,14 +247,14 @@ my multi sub source-sbom-hash(
         # Can find this
         with meta($requirement) -> %json {
 
-            my $ref           := $requirement;
+            my $ref           := purlize $requirement;
             %components{$ref} := component %json;
             %refs{$ref}       := my %dependencies;
 
             my sub fetch-dependencies($depends) {
                 for dependencies-from-depends($depends) -> $requirement {
                     with meta($requirement) -> %json {
-                        my $ref := $requirement;
+                        my $ref := purlize $requirement;
                         %dependencies{$ref} := build %json;  # XXX requirement vs selected identity
 
                         # An unseen component, recurse

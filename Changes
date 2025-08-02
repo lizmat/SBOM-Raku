@@ -1,9 +1,12 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+
+0.0.6  2025-08-02T19:09:13+02:00
     - Fix issue with license that isn't SPDX
     - Produces requirements in dependencies of "source-sbom"
       as that is what we should expect from source dependencies
+    - Bump dependencies on SBOM::CycloneDX and PURL for fixes
 
 0.0.5  2025-08-01T22:14:15+02:00
     - Add "source-sbom" script that creates/updates the source
