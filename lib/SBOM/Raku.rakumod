@@ -66,14 +66,14 @@ my multi sub authors(%json, %out) {
 #- licenses --------------------------------------------------------------------
 my proto sub licenses(|) {*}
 my multi sub licenses(%json) {
-    with %json<license> {
+    with %json<license> -> $license {
         my %args = acknowledgement => BEGIN Acknowledgement("declared");
-        with try LicenseId($_) -> $id {
+        with try LicenseId($license) -> $id {
             %args<id>  := $id;  # UNCOVERABLE
             %args<url> := $_ with $id.url;
         }
         else {
-            %args<name> := $_;
+            %args<name> := $license;
         }
         (SBOM::License.new(
           license => SBOM::LicenseInfo.new(|%args, :raw-error)
@@ -242,20 +242,18 @@ my multi sub source-sbom-hash(
     my %components;
     my %refs;
     for dependencies-from-depends(%json<depends>) -> $requirement {
-
         # Can find this
         with meta($requirement) -> %json {
 
-            # Dependency spec may differ from identity selected
-            my $ref           := build %json;
+            my $ref           := $requirement;
             %components{$ref} := component %json;
-            %refs{$ref}       := my @dependencies;
+            %refs{$ref}       := my %dependencies;
 
             my sub fetch-dependencies($depends) {
                 for dependencies-from-depends($depends) -> $requirement {
                     with meta($requirement) -> %json {
-                        my $ref := build %json;
-                        @dependencies.push($ref);
+                        my $ref := $requirement;
+                        %dependencies{$ref} := build %json;  # XXX requirement vs selected identity
 
                         # An unseen component, recurse
                         unless %components{$ref} {
@@ -270,7 +268,7 @@ my multi sub source-sbom-hash(
     }
 
     %out<dependencies> := %refs.keys.sort.map(-> $ref {
-        SBOM::Dependency.new(:$ref, :dependsOn(%refs{$ref}))
+        SBOM::Dependency.new(:$ref, :dependsOn(%refs{$ref}.keys.sort.List))
     }).List;
     %out<components> := %components.sort(*.key).map(*.value).List;
 
@@ -304,6 +302,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.5>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.6>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4
