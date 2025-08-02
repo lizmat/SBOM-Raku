@@ -13,6 +13,7 @@ use SBOM::Raku;
 
 say source-sbom("META6.json").JSON;
 # {
+#   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
 #   "bomFormat": "CycloneDX",
 #   "specVersion": "1.6",
 #   "version": 1,
@@ -154,6 +155,7 @@ source-sbom
 ```raku
 say source-sbom("META6.json").JSON;
 # {
+#   "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
 #   "bomFormat": "CycloneDX",
 #   "specVersion": "1.6",
 #   "version": 1,
