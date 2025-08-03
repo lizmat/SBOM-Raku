@@ -98,6 +98,7 @@ my multi sub component-hash(
    %json,
   :$type  = "library",
   :$scope = "required",
+  :$bom-ref,
   *%in
 ) {
     my %out;
@@ -113,7 +114,8 @@ my multi sub component-hash(
     my $identity := build(%json);
     die "Identity '$identity' must be pinned" unless is-pinned($identity);
     my $purl := PURL.from-identity($identity).Str;  # throws if invalid
-    %out<bom-ref> := %out<purl> := $purl;
+    %out<purl>    := $purl;
+    %out<bom-ref> := $bom-ref // $purl;
 
     %out<mime-type> := "text/plain";
     %out<group>     := auth($identity);
@@ -247,19 +249,19 @@ my multi sub source-sbom-hash(
         # Can find this
         with meta($requirement) -> %json {
 
-            my $ref           := purlize $requirement;
-            %components{$ref} := component %json;
-            %refs{$ref}       := my %dependencies;
+            my $bom-ref           := purlize $requirement;
+            %components{$bom-ref} := component %json, :$bom-ref;
+            %refs{$bom-ref}       := my %dependencies;
 
             my sub fetch-dependencies($depends) {
                 for dependencies-from-depends($depends) -> $requirement {
                     with meta($requirement) -> %json {
-                        my $ref := purlize $requirement;
-                        %dependencies{$ref} := build %json;  # XXX requirement vs selected identity
+                        my $bom-ref             := purlize $requirement;
+                        %dependencies{$bom-ref} := build %json;  # XXX requirement vs selected identity
 
                         # An unseen component, recurse
-                        unless %components{$ref} {
-                            %components{$ref} := component %json;
+                        unless %components{$bom-ref} {
+                            %components{$bom-ref} := component %json, :$bom-ref;
                             fetch-dependencies(%json<depends>)
                         }
                     }
@@ -304,6 +306,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.6>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.7>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4

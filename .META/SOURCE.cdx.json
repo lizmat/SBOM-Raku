@@ -4,7 +4,7 @@
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-08-02T17:12:56+00:00",
+    "timestamp": "2025-08-03T19:34:52+00:00",
     "lifecycles": [
       {
         "phase": "pre-build"
@@ -150,7 +150,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:rbt/Net::DNS@1.4",
+      "bom-ref": "pkg:raku/Net::DNS",
       "authors": [
         {
           "bom-ref": "githubretupmoca",
@@ -208,7 +208,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/cpan:TIMOTIMO/JSON::Fast@0.19",
+      "bom-ref": "pkg:raku/cpan:TIMOTIMO/JSON::Fast?vers=vers:raku/%3E=0.19",
       "authors": [
         {
           "bom-ref": "TimoPaulssen",
@@ -261,7 +261,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:demayl/Email::Valid@1.0.7",
+      "bom-ref": "pkg:raku/zef:demayl/Email::Valid?vers=vers:raku/%3E=1.0.7",
       "authors": [
         {
           "bom-ref": "DenisKanchevdenisfluxarkcom",
@@ -312,7 +312,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/Identity::Utils@0.0.25",
+      "bom-ref": "pkg:raku/zef:lizmat/Identity::Utils?vers=vers:raku/%3E=0.0.25",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -367,7 +367,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/PURL@0.0.14",
+      "bom-ref": "pkg:raku/zef:lizmat/PURL?vers=vers:raku/%3E=0.0.14",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -424,7 +424,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.12",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.12",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -483,7 +483,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/String::Utils@0.0.35",
+      "bom-ref": "pkg:raku/zef:lizmat/String::Utils?vers=vers:raku/%3E=0.0.35",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -543,7 +543,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/VERS@0.0.2",
+      "bom-ref": "pkg:raku/zef:lizmat/VERS?vers=vers:raku/%3E=0.0.2",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsenlizrakurocks",
@@ -599,7 +599,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:raku-community-modules/OpenSSL@0.2.5",
+      "bom-ref": "pkg:raku/zef:raku-community-modules/OpenSSL?vers=vers:raku/%3E=0.2.5",
       "authors": [
         {
           "bom-ref": "FilipSergot",
@@ -662,7 +662,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:raku-community-modules/URI::Encode@1.0",
+      "bom-ref": "pkg:raku/zef:raku-community-modules/URI::Encode?vers=vers:raku/%3E=1.0",
       "authors": [
         {
           "bom-ref": "DavidFarrell",

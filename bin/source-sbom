@@ -1,4 +1,4 @@
-use SBOM::Raku:ver<0.0.6>:auth<zef:lizmat> <source-sbom>;
+use SBOM::Raku:ver<0.0.7>:auth<zef:lizmat> <source-sbom>;
 
 my constant $filename = 'SOURCE.cdx.json';
 
