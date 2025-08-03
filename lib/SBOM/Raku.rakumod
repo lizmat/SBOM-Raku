@@ -114,7 +114,7 @@ my multi sub component-hash(
     my $identity := build(%json);
     die "Identity '$identity' must be pinned" unless is-pinned($identity);
     my $purl := PURL.from-identity($identity).Str;  # throws if invalid
-    %out<purl>    := $purl;
+    %out<purl>    := $purl;  # UNCOVERABLE
     %out<bom-ref> := $bom-ref // $purl;
 
     %out<mime-type> := "text/plain";
