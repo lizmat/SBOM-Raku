@@ -4,7 +4,7 @@
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-08-03T19:34:52+00:00",
+    "timestamp": "2025-08-03T19:56:47+00:00",
     "lifecycles": [
       {
         "phase": "pre-build"
@@ -19,7 +19,7 @@
     "component": {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.6",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.7",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -29,7 +29,7 @@
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "SBOM::Raku",
-      "version": "0.0.6",
+      "version": "0.0.7",
       "description": "Raku specific SBOM functionality",
       "scope": "required",
       "licenses": [
@@ -41,10 +41,10 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.6",
+      "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.7",
       "externalReferences": [
         {
-          "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.6",
+          "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.7",
           "type": "documentation"
         },
         {
@@ -60,7 +60,7 @@
           "type": "distribution"
         },
         {
-          "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.6.zip",
+          "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.7.zip",
           "type": "source-distribution"
         },
         {
@@ -88,7 +88,7 @@
         {
           "type": "library",
           "mime-type": "text/plain",
-          "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.6",
+          "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.7",
           "authors": [
             {
               "bom-ref": "ElizabethMattijsen",
@@ -98,7 +98,7 @@
           "publisher": "zef",
           "group": "zef:lizmat",
           "name": "SBOM::Raku",
-          "version": "0.0.6",
+          "version": "0.0.7",
           "description": "Raku specific SBOM functionality",
           "scope": "required",
           "licenses": [
@@ -110,10 +110,10 @@
               }
             }
           ],
-          "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.6",
+          "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.7",
           "externalReferences": [
             {
-              "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.6",
+              "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.7",
               "type": "documentation"
             },
             {
@@ -129,7 +129,7 @@
               "type": "distribution"
             },
             {
-              "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.6.zip",
+              "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.7.zip",
               "type": "source-distribution"
             },
             {
@@ -715,7 +715,7 @@
   ],
   "externalReferences": [
     {
-      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.6",
+      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.7",
       "type": "documentation"
     },
     {
@@ -731,7 +731,7 @@
       "type": "distribution"
     },
     {
-      "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.6.zip",
+      "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.7.zip",
       "type": "source-distribution"
     },
     {

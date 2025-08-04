@@ -1,12 +1,13 @@
 use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
 use OpenSSL::Digest:ver<0.2.5+>:auth<zef:raku-community-modules>;
 use PURL:ver<0.0.14+>:auth<zef:lizmat>;
-use SBOM::CycloneDX:ver<0.0.12+>:auth<zef:lizmat>;
 
-use Identity::Utils:ver<0.0.25+>:auth<zef:lizmat> <
-  auth build meta dependencies-from-depends distribution-name
+use Identity::Utils:ver<0.0.26+>:auth<zef:lizmat> <
+  auth build meta dependencies-from-meta distribution-name
   ecosystem is-pinned raku-land-url short-name ver
 >;
+
+use SBOM::CycloneDX:ver<0.0.12+>:auth<zef:lizmat>;
 use SBOM::enums:ver<0.0.12+>:auth<zef:lizmat> <
   Acknowledgement ComponentType LicenseId Phase ReferenceSource Scope
 >;
@@ -186,7 +187,7 @@ my multi sub component-hash(
         add-reference(.license.url, BEGIN ReferenceSource("license"))
           for @licenses;
     }
-    %out<externalReferences> := @externalReferences.List;
+    %out<externalReferences> := @externalReferences.sort(*.type).List;
 
     %out<tags> := %json<tags> // ();
 
@@ -245,7 +246,7 @@ my multi sub source-sbom-hash(
     # Code to recursively find dependencies
     my %components;
     my %refs;
-    for dependencies-from-depends(%json<depends>) -> $requirement {
+    for dependencies-from-meta(%json, :stage<all>) -> $requirement {
         # Can find this
         with meta($requirement) -> %json {
 
@@ -253,8 +254,8 @@ my multi sub source-sbom-hash(
             %components{$bom-ref} := component %json, :$bom-ref;
             %refs{$bom-ref}       := my %dependencies;
 
-            my sub fetch-dependencies($depends) {
-                for dependencies-from-depends($depends) -> $requirement {
+            my sub fetch-dependencies(%meta) {
+                for dependencies-from-meta(%meta) -> $requirement {
                     with meta($requirement) -> %json {
                         my $bom-ref             := purlize $requirement;
                         %dependencies{$bom-ref} := build %json;  # XXX requirement vs selected identity
@@ -262,12 +263,12 @@ my multi sub source-sbom-hash(
                         # An unseen component, recurse
                         unless %components{$bom-ref} {
                             %components{$bom-ref} := component %json, :$bom-ref;
-                            fetch-dependencies(%json<depends>)
+                            fetch-dependencies(%json)
                         }
                     }
                 }
             }
-            fetch-dependencies(%json<depends>);
+            fetch-dependencies(%json);
         }
     }
 

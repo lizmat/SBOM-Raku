@@ -1,6 +1,11 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Make sure "build" and "test" dependencies are also
+      listed as dependencies
+    - Bump dependency on Identity::Utils for
+      "dependencies-from-meta"
+    - Order the externalReferences by type
 
 0.0.7  2025-08-03T21:53:21+02:00
     - Make reference bom-refs internally consistent

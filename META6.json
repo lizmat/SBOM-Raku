@@ -8,7 +8,7 @@
   "depends": {
     "runtime": {
       "requires": [
-        "Identity::Utils:ver<0.0.25+>:auth<zef:lizmat>",
+        "Identity::Utils:ver<0.0.26+>:auth<zef:lizmat>",
         "JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>",
         "OpenSSL:ver<0.2.5+>:auth<zef:raku-community-modules>",
         "PURL:ver<0.0.14+>:auth<zef:lizmat>",
