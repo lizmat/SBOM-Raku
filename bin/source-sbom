@@ -1,48 +1,17 @@
-use SBOM::Raku:ver<0.0.7>:auth<zef:lizmat> <source-sbom>;
-
-my constant $filename = 'SOURCE.cdx.json';
+use SBOM::Raku:ver<0.0.8>:auth<zef:lizmat> <produce-source-sbom>;
 
 my str @errors;
-my sub add-error(IO::Path:D $io) {
-    @errors.push: $io.absolute;
-}
-
+my sub error(IO::Path:D $io, Str() $) { @errors.push: $io.absolute }
 my int $created;
+my sub created(IO::Path:D $) { ++$created }
 my int $updated;
-my sub produce-sbom(IO() $io) {
-    with (try source-sbom($io)) -> $sbom {
-        my $dir := $io.sibling(".META");
-        $dir.mkdir;
-        my $sbom-io := $dir.add($filename);
-        my $existed := $sbom-io.s;
-
-        $sbom-io.spurt($sbom.JSON);
-        if $sbom-io.s {
-            if $existed {
-                ++$updated;
-            }
-            else {
-                indir $dir, {
-                    my $proc := run <git add>, $filename, :out, :err;
-                    note $proc.err.slurp.chomp if $proc.exitcode;
-                }
-                ++$created;
-            }
-        }
-        else {
-            add-error($io);
-        }
-    }
-    else {
-        add-error($io);
-    }
-}
+my sub updated(IO::Path:D $) { ++$updated }
 
 #| Produce source SBOMs in their associated .META directory for the
 #| given META6.json files
 sub MAIN(*@jsons) {
     if @jsons {
-        produce-sbom($_) for @jsons;
+        produce-source-sbom($_, :&created, :&updated, :&error) for @jsons;
 
         if @errors {
             note "Files that did not produce a source SBOM:";

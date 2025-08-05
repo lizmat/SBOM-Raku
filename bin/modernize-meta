@@ -1,0 +1,31 @@
+use SBOM::Raku:ver<0.0.8>:auth<zef:lizmat> <modernize-META6>;
+
+my str @errors;
+my sub error(IO::Path:D $io, Str() $) { @errors.push: $io.absolute }
+my int $changed;
+my sub changed(IO::Path:D $) { ++$changed }
+
+#| Update the given META6.json files to modern SBOM-ready standard
+sub MAIN(
+       *@jsons,      #= META6.json file(s) to process
+  Bool :$production, #= mark as (not) production ready if False/True
+) {
+    if @jsons {
+        modernize-META6(
+          $_, :$production, :&changed, :&error
+        ) for @jsons;
+
+        if @errors {
+            note "Files that did not produce valid JSON:";
+            note "  $_" for @errors;
+        }
+        if $changed {
+            note "Updated $changed META6.json file{'s' if $changed > 1}";
+        }
+    }
+    else {
+        note "No META6.json files specified";
+    }
+}
+
+# vim: expandtab shiftwidth=4

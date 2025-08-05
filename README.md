@@ -38,6 +38,28 @@ source-sbom
 
 The `source-sbom` script expects at least one "META6.json" file to be specified. It will try to create source SBOM files for each of the "META6.json" files specified in tyeir sibling directory `.META`. If this is a newly created file, an attempt will be made to add it to the repository in which it is residing.
 
+modernize-meta
+--------------
+
+    $ modernize-meta META6.json
+    Updated 1 META6.json file
+
+The `modernize-meta` script expects at least one "META6.json" file to be specified. It will try to update the specified file(s) to match modern META specifications:
+
+  * replace "depends" field with an array specification by a hash with extended specifications.
+
+  * remove "build-dependencies" and "test-dependencies" and put any information in there into the "depends" hash
+
+  * add "raku" field, take (and remove) "perl" field if there is any
+
+  * remove "author" field: put any contents in the "authors" field array
+
+  * remove empty array fields
+
+  * add "support" field hash with at least a "bugtracker" field
+
+  * move the "source-url" field to the "support" fueld hash
+
 SELECTIVE IMPORTING
 ===================
 
@@ -184,10 +206,67 @@ The `source-sbom-hash` subroutine returns a hash in the format needed to create 
 
 It's main intended use is to be able to tweak the arguments prior to making an `SBOM::CycloneDX` object.
 
+produce-source-sbom
+-------------------
+
+```raku
+produce-source-sbom("META6.json");  # written to .META/SOURCE.cdx.json
+
+produce-source-sbom("META6.json", ".META/SOURCE.cdx.json");
+
+sub error($io, $error) { die "$io: $error }
+produce-source-sbom("META6.json", :&error);
+```
+
+Read the META information at the path by the first positional argument and produce a `source-sbom` at the path specified by the optional second argument (defaults to ".META/SOURCE.cdx.json" in the same directory as the path of the first arguments).
+
+If the file didn't exist before, it will be added to the repository if possible.
+
+Optionally takes these named arguments, each taking a `Callable` to be executed when certain events take place:
+
+<table class="pod-table">
+<thead><tr>
+<th>name</th> <th>arguments</th>
+</tr></thead>
+<tbody>
+<tr> <td>:created</td> <td>IO::Path of created file</td> </tr> <tr> <td>:updated</td> <td>IO::Path of updated file</td> </tr> <tr> <td>:error</td> <td>IO::Path of file with error, error message</td> </tr>
+</tbody>
+</table>
+
+This subroutine may have limited production value, but it's the workhorse of the `source-sbom` script, so it's included here for convenience.
+
+modernize-META6
+---------------
+
+```raku
+modernize-META6("META6.json");  # modernize in place
+
+modernize-META6("META6.json", "modernized.json");
+```
+
+Read the META information at the path by the first positional argument and produce a modernized version at the path specified by the optional second argument (defaults to the first argument).
+
+Optionally takes these named arguments, each taking a `Callable` to be executed when certain events take place:
+
+<table class="pod-table">
+<thead><tr>
+<th>name</th> <th>arguments</th>
+</tr></thead>
+<tbody>
+<tr> <td>:changed</td> <td>IO::Path of changed file</td> </tr> <tr> <td>:error</td> <td>IO::Path of file with error, error message</td> </tr>
+</tbody>
+</table>
+
+This subroutine may have limited production value, but it's the workhorse of the `modernize-meta` script, so it's included here for convenience. For more info on the changes, see the documentation of the script.
+
 AUTHOR
 ======
 
 Elizabeth Mattijsen <liz@raku.rocks>
+
+Source can be located at: https://github.com/lizmat/SBOM-Raku . Comments and Pull Requests are welcome.
+
+If you like this module, or what I’m doing more generally, committing to a [small sponsorship](https://github.com/sponsors/lizmat/) would mean a great deal to me!
 
 COPYRIGHT AND LICENSE
 =====================

@@ -339,7 +339,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "Identity::Utils",
-      "version": "0.0.26",
+      "version": "0.0.28",
       "description": "Provide utility functions related to distribution identities",
       "scope": "required",
       "licenses": [
@@ -351,14 +351,14 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/Identity::Utils@0.0.26",
+      "purl": "pkg:raku/zef:lizmat/Identity::Utils@0.0.28",
       "externalReferences": [
         {
           "url": "https://github.com/lizmat/Identity-Utils",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/Identity::Utils?v=0.0.26",
+          "url": "https://raku.land/zef:lizmat/Identity::Utils?v=0.0.28",
           "type": "documentation"
         },
         {
@@ -370,7 +370,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
           "type": "license"
         },
         {
-          "url": "https://github.com/lizmat/Identity-Utils/archive/refs/tags/0.0.26.zip",
+          "url": "https://github.com/lizmat/Identity-Utils/archive/refs/tags/0.0.28.zip",
           "type": "source-distribution"
         },
         {
@@ -388,7 +388,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/Identity::Utils?vers=vers:raku/%3E=0.0.26",
+      "bom-ref": "pkg:raku/zef:lizmat/Identity::Utils?vers=vers:raku/%3E=0.0.28",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -398,7 +398,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "Identity::Utils",
-      "version": "0.0.26",
+      "version": "0.0.28",
       "description": "Provide utility functions related to distribution identities",
       "scope": "required",
       "licenses": [
@@ -410,14 +410,14 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/Identity::Utils@0.0.26",
+      "purl": "pkg:raku/zef:lizmat/Identity::Utils@0.0.28",
       "externalReferences": [
         {
           "url": "https://github.com/lizmat/Identity-Utils",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/Identity::Utils?v=0.0.26",
+          "url": "https://raku.land/zef:lizmat/Identity::Utils?v=0.0.28",
           "type": "documentation"
         },
         {
@@ -429,7 +429,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
           "type": "license"
         },
         {
-          "url": "https://github.com/lizmat/Identity-Utils/archive/refs/tags/0.0.26.zip",
+          "url": "https://github.com/lizmat/Identity-Utils/archive/refs/tags/0.0.28.zip",
           "type": "source-distribution"
         },
         {
@@ -824,7 +824,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "ref": "pkg:raku/cpan:TIMOTIMO/JSON::Fast?vers=vers:raku/%3E=0.19"
     },
     {
-      "ref": "pkg:raku/zef:lizmat/Identity::Utils?vers=vers:raku/%3E=0.0.26",
+      "ref": "pkg:raku/zef:lizmat/Identity::Utils?vers=vers:raku/%3E=0.0.28",
       "dependsOn": [
         "pkg:raku/zef:lizmat/String::Utils?vers=vers:raku/%3E=0.0.35"
       ]

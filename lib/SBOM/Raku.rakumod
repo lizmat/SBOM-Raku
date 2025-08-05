@@ -2,9 +2,10 @@ use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
 use OpenSSL::Digest:ver<0.2.5+>:auth<zef:raku-community-modules>;
 use PURL:ver<0.0.14+>:auth<zef:lizmat>;
 
-use Identity::Utils:ver<0.0.26+>:auth<zef:lizmat> <
+use Identity::Utils:ver<0.0.28+>:auth<zef:lizmat> <
   auth build meta dependencies-from-meta distribution-name
-  ecosystem is-pinned raku-land-url short-name ver
+  ecosystem is-pinned issue-tracker-url raku-land-url short-name
+  source-distribution-url ver
 >;
 
 use SBOM::CycloneDX:ver<0.0.12+>:auth<zef:lizmat>;
@@ -137,18 +138,15 @@ my multi sub component-hash(
 
         add-reference $url, BEGIN ReferenceSource("distribution");
 
-        if $url.starts-with("https://github.com/") {
+        if issue-tracker-url($url) -> $tracker-url {
             add-reference(
-              "$url/issues",
-              BEGIN ReferenceSource("issue-tracker")
+              $tracker-url, BEGIN ReferenceSource("issue-tracker")
             ) unless $no-issue-tracker;
-
-            add-reference
-              "$url/archive/refs/tags/%out<version>.zip",
-              BEGIN ReferenceSource("source-distribution");
         }
-        elsif $url.starts-with('https://gitlab.com') {
-            # XXX  need to figure out
+
+        if source-distribution-url($url, %out<version>) -> $dist-url {
+            add-reference
+              $dist-url, BEGIN ReferenceSource("source-distribution");
         }
     }
 
@@ -283,6 +281,157 @@ my multi sub source-sbom-hash(
     %out
 }
 
+#- produce-source-sbom ---------------------------------------------------------
+my constant $SOURCE-cdx-json = 'SOURCE.cdx.json';
+my sub produce-source-sbom(
+  IO() $io,
+  IO() $sbom-io = $io.sibling(".META/$SOURCE-cdx-json");
+      :&created = -> $ { },
+      :&updated = -> $ { },
+      :&error   = -> $, $ { },
+--> Nil) {
+
+    with (try source-sbom($io)) -> $sbom {
+        (my $dir := $sbom-io.parent).mkdir;
+        my $existed := $sbom-io.s;
+
+        $sbom-io.spurt($sbom.JSON);
+        if $sbom-io.s {
+            if $existed {
+                updated($io);
+            }
+            else {
+                indir $dir, {
+                    my $proc := run <git add>, $sbom-io.basename, :out, :err;
+                    note $proc.err.slurp.chomp if $proc.exitcode;
+                }
+                created($io)
+            }
+        }
+        else {
+            error($io, "Does not exist");
+        }
+    }
+    else {
+        error($io, $!);
+    }
+}
+
+#- modernize-META6 -------------------------------------------------------------
+my sub modernize-META6(
+  IO()  $io,
+  IO()  $destination-io = $io,
+  Bool :$production,
+  Str  :$auth,
+       :&changed = -> $ { },
+       :&error   = -> $, $ { },
+--> Nil) {
+    my $changed;
+    sub mark-as-changed() { $changed = True }
+
+    with (try from-json($io.slurp)) -> %json {
+
+        # Logic to preserve old-style depends info
+        my @build-depends = %json<build-depends>:delete:v;
+        my @test-depends  = %json<test-depends>:delete:v;
+        sub keep-old-depends() {
+            my %depends := %json<depends>;
+            %depends<build><requires> := @build-depends if @build-depends;
+            %depends<test><requires>  := @test-depends  if @test-depends;
+            mark-as-changed;
+        }
+
+        without %json<auth> {
+            $_ = "zef:$_" with try from-json(
+              $*HOME.add("/.fez-config.json").slurp, :immutable
+            )<un>;
+            mark-as-changed;
+        }
+
+        without %json<authors> {
+            $_ = my @authors;
+            with %json<author>:delete {
+                @authors.push($_);
+                mark-as-changed;
+            }
+        }
+
+        with $production {
+            unless %json<production> eqv $_ {
+                %json<production> = $_;
+                mark-as-changed;
+            }
+        }
+
+        without %json<raku> {
+            $_ = %json<perl>:delete // "6.d";
+            mark-as-changed;
+        }
+
+        with %json<perl> {
+            %json<perl>:delete;
+            mark-as-changed;
+        }
+
+        with %json<resources> {
+            unless .elems {
+                %json<resources>:delete;
+                mark-as-changed;
+            }
+        }
+
+        my $source-url = %json<source-url>:delete;
+
+        if %json<support> -> %support {
+            if $source-url {
+                without %support<bugtracker> {
+                    $_ = issue-tracker-url($source-url);
+                    mark-as-changed;
+                }
+
+                without %support<source> {
+                    $_ = $source-url;
+                    mark-as-changed;
+                }
+            }
+        }
+        elsif $source-url {
+            %json<support> = {
+              bugtracker => issue-tracker-url($source-url),
+              source     => $source-url
+            }
+            mark-as-changed;
+        }
+
+        with %json<depends> -> $depends {
+            $depends = [$depends] if $depends ~~ Str;
+
+            # An array is old style, so convert to new
+            if $depends ~~ Positional {
+                my %depends;
+                %depends<runtime><requires> := $depends<>;
+                $depends = %depends;
+                keep-old-depends if @build-depends || @test-depends;
+            }
+        }
+
+        # No "depends" yet, but we haz other old-style dependencies
+        elsif @build-depends || @test-depends {
+            %json<depends> := my %depends;
+            keep-old-depends;
+        }
+
+        # Changes made, so update and mark as updated
+        if $changed {
+            $destination-io.spurt: to-json(%json, :pretty, :sorted-keys);
+            changed($destination-io)
+        }
+    }
+    else {
+        error($io, $!);
+    }
+}
+
 #- EXPORT ----------------------------------------------------------------------
 my sub EXPORT(*@names) {
     Map.new: @names
@@ -299,7 +448,8 @@ my sub EXPORT(*@names) {
          }
       !! <
            authors component component-hash licenses metadata
-           metadata-hash source-sbom source-sbom-hash
+           metadata-hash modernize-META6 produce-source-sbom
+           source-sbom source-sbom-hash
          >.map({  # UNCOVERABLE
              "&$_" => UNIT::{"&$_"}  # UNCOVERABLE
          }).Map
@@ -307,6 +457,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.7>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.8>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4
