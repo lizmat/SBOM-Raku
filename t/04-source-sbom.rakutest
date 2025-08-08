@@ -1,7 +1,9 @@
 use Test;
-use SBOM::Raku <source-sbom source-sbom-hash from-json>;
+use SBOM::Raku <source-sbom source-sbom-hash from-json describe-Version>;
 
 my constant $version = SBOM::Raku.^ver.Str;
+my constant $vm-vers = describe-Version $*VM.version;
+my constant $ra-vers = describe-Version Compiler.new.version;
 my $timestamp       := DateTime.new(now.Int).Str.subst("Z","+00:00");
 my $schema          := '$schema';  # work around interpolation issue
 
@@ -176,7 +178,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "Rakudo Core Developers",
       "group": "Rakudo Core Developers",
       "name": "Rakudo",
-      "version": "2025.06.1-10-g5e8d7f656",
+      "version": "$ra-vers",
       "description": "The Rakudo™ Compiler implementing the Raku® Programming Language",
       "scope": "required",
       "licenses": [
@@ -220,7 +222,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "The MoarVM Team",
       "group": "The MoarVM Team",
       "name": "Moar",
-      "version": "2025.06.5-gb1c74b8d8",
+      "version": "$vm-vers",
       "description": "Short for \"Metamodel On A Runtime\", MoarVM is a modern virtual machine built for the Rakudo compiler and the NQP Compiler Toolchain.",
       "scope": "required",
       "licenses": [
@@ -718,7 +720,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "String::Utils",
-      "version": "0.0.35",
+      "version": "0.0.36",
       "description": "Provide some optimized string functions",
       "scope": "required",
       "licenses": [
@@ -730,14 +732,14 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/String::Utils@0.0.35",
+      "purl": "pkg:raku/zef:lizmat/String::Utils@0.0.36",
       "externalReferences": [
         {
           "url": "https://github.com/lizmat/String-Utils",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/String::Utils?v=0.0.35",
+          "url": "https://raku.land/zef:lizmat/String::Utils?v=0.0.36",
           "type": "documentation"
         },
         {
@@ -749,7 +751,67 @@ sub sbom-ok($sbom, $source) is test-assertion {
           "type": "license"
         },
         {
-          "url": "https://github.com/lizmat/String-Utils/archive/refs/tags/0.0.35.zip",
+          "url": "https://github.com/lizmat/String-Utils/archive/refs/tags/0.0.36.zip",
+          "type": "source-distribution"
+        }
+      ],
+      "tags": [
+        "STRING",
+        "UTIL",
+        "CHOMP",
+        "SHA1",
+        "STEM",
+        "NGRAM",
+        "NAUGHTY",
+        "WORD",
+        "MARKS"
+      ]
+    },
+    {
+      "type": "library",
+      "mime-type": "text/plain",
+      "bom-ref": "pkg:raku/zef:lizmat/String::Utils?vers=vers:raku/%3E=0.0.36",
+      "authors": [
+        {
+          "bom-ref": "ElizabethMattijsen",
+          "name": "Elizabeth Mattijsen"
+        }
+      ],
+      "publisher": "zef",
+      "group": "zef:lizmat",
+      "name": "String::Utils",
+      "version": "0.0.36",
+      "description": "Provide some optimized string functions",
+      "scope": "required",
+      "licenses": [
+        {
+          "license": {
+            "id": "Artistic-2.0",
+            "acknowledgement": "declared",
+            "url": "https://spdx.org/licenses/Artistic-2.0.json"
+          }
+        }
+      ],
+      "purl": "pkg:raku/zef:lizmat/String::Utils@0.0.36",
+      "externalReferences": [
+        {
+          "url": "https://github.com/lizmat/String-Utils",
+          "type": "distribution"
+        },
+        {
+          "url": "https://raku.land/zef:lizmat/String::Utils?v=0.0.36",
+          "type": "documentation"
+        },
+        {
+          "url": "https://github.com/lizmat/String-Utils/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://spdx.org/licenses/Artistic-2.0.json",
+          "type": "license"
+        },
+        {
+          "url": "https://github.com/lizmat/String-Utils/archive/refs/tags/0.0.36.zip",
           "type": "source-distribution"
         }
       ],
@@ -1009,7 +1071,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       ]
     },
     {
-      "ref": "pkg:raku/zef:lizmat/String::Utils?vers=vers:raku/%3E=0.0.35"
+      "ref": "pkg:raku/zef:lizmat/String::Utils?vers=vers:raku/%3E=0.0.36"
     },
     {
       "ref": "pkg:raku/zef:raku-community-modules/OpenSSL?vers=vers:raku/%3E=0.2.5"
@@ -1022,7 +1084,7 @@ JSON
             for $got.lines.kv -> $i, $line {
                 if $line ne @expected[$i] {
                     say "at line {$start + $i}:";
-                    say "- @expected[$i]\n+ $line";
+                    say "- '@expected[$i]'\n+ '$line'";
                     last;
                 }
             }

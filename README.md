@@ -128,6 +128,15 @@ The `component-hash` subroutine returns a hash in the format needed to create an
 
 It's main intended use is to be able to tweak the arguments prior to making an `SBOM::Component` object.
 
+contact
+-------
+
+```raku
+my $contact = contact("Jane Doe");
+```
+
+The `contact` subroutine creates a unique `SBOM::Contact` object for the given string, providing from a cache if necessary.
+
 licenses
 --------
 
@@ -171,6 +180,68 @@ The `metadata-hash` subroutine returns a hash in the format needed to create an 
 
 It's main intended use is to be able to tweak the arguments prior to making an `SBOM::Metadata` object.
 
+modernize-META6
+---------------
+
+```raku
+modernize-META6("META6.json");  # modernize in place
+
+modernize-META6("META6.json", "modernized.json");
+```
+
+Read the META information at the path by the first positional argument and produce a modernized version at the path specified by the optional second argument (defaults to the first argument).
+
+Optionally takes these named arguments, each taking a `Callable` to be executed when certain events take place:
+
+<table class="pod-table">
+<thead><tr>
+<th>name</th> <th>arguments</th>
+</tr></thead>
+<tbody>
+<tr> <td>:changed</td> <td>IO::Path of changed file</td> </tr> <tr> <td>:error</td> <td>IO::Path of file with error, error message</td> </tr>
+</tbody>
+</table>
+
+This subroutine may have limited production value, but it's the workhorse of the `modernize-meta` script, so it's included here for convenience. For more info on the changes, see the documentation of the script.
+
+produce-source-sbom
+-------------------
+
+```raku
+produce-source-sbom("META6.json");  # written to .META/SOURCE.cdx.json
+
+produce-source-sbom("META6.json", ".META/SOURCE.cdx.json");
+
+sub error($io, $error) { die "$io: $error }
+produce-source-sbom("META6.json", :&error);
+```
+
+Read the META information at the path by the first positional argument and produce a `source-sbom` at the path specified by the optional second argument (defaults to ".META/SOURCE.cdx.json" in the same directory as the path of the first arguments).
+
+If the file didn't exist before, it will be added to the repository if possible.
+
+Optionally takes these named arguments, each taking a `Callable` to be executed when certain events take place:
+
+<table class="pod-table">
+<thead><tr>
+<th>name</th> <th>arguments</th>
+</tr></thead>
+<tbody>
+<tr> <td>:created</td> <td>IO::Path of created file</td> </tr> <tr> <td>:updated</td> <td>IO::Path of updated file</td> </tr> <tr> <td>:error</td> <td>IO::Path of file with error, error message</td> </tr>
+</tbody>
+</table>
+
+This subroutine may have limited production value, but it's the workhorse of the `source-sbom` script, so it's included here for convenience.
+
+Rakudo-component
+----------------
+
+```raku
+my $comp = Rakudo-component;
+```
+
+Returns a `SBOM::Component` object representing the version of Rakudo is running.
+
 source-sbom
 -----------
 
@@ -205,68 +276,6 @@ my $sbom = SBOM::CycloneDX.new(|%args);
 The `source-sbom-hash` subroutine returns a hash in the format needed to create an `SBOM::CycloneDX` object with, from a `META6.json` file (or a hash of that representation).
 
 It's main intended use is to be able to tweak the arguments prior to making an `SBOM::CycloneDX` object.
-
-produce-source-sbom
--------------------
-
-```raku
-produce-source-sbom("META6.json");  # written to .META/SOURCE.cdx.json
-
-produce-source-sbom("META6.json", ".META/SOURCE.cdx.json");
-
-sub error($io, $error) { die "$io: $error }
-produce-source-sbom("META6.json", :&error);
-```
-
-Read the META information at the path by the first positional argument and produce a `source-sbom` at the path specified by the optional second argument (defaults to ".META/SOURCE.cdx.json" in the same directory as the path of the first arguments).
-
-If the file didn't exist before, it will be added to the repository if possible.
-
-Optionally takes these named arguments, each taking a `Callable` to be executed when certain events take place:
-
-<table class="pod-table">
-<thead><tr>
-<th>name</th> <th>arguments</th>
-</tr></thead>
-<tbody>
-<tr> <td>:created</td> <td>IO::Path of created file</td> </tr> <tr> <td>:updated</td> <td>IO::Path of updated file</td> </tr> <tr> <td>:error</td> <td>IO::Path of file with error, error message</td> </tr>
-</tbody>
-</table>
-
-This subroutine may have limited production value, but it's the workhorse of the `source-sbom` script, so it's included here for convenience.
-
-modernize-META6
----------------
-
-```raku
-modernize-META6("META6.json");  # modernize in place
-
-modernize-META6("META6.json", "modernized.json");
-```
-
-Read the META information at the path by the first positional argument and produce a modernized version at the path specified by the optional second argument (defaults to the first argument).
-
-Optionally takes these named arguments, each taking a `Callable` to be executed when certain events take place:
-
-<table class="pod-table">
-<thead><tr>
-<th>name</th> <th>arguments</th>
-</tr></thead>
-<tbody>
-<tr> <td>:changed</td> <td>IO::Path of changed file</td> </tr> <tr> <td>:error</td> <td>IO::Path of file with error, error message</td> </tr>
-</tbody>
-</table>
-
-This subroutine may have limited production value, but it's the workhorse of the `modernize-meta` script, so it's included here for convenience. For more info on the changes, see the documentation of the script.
-
-Rakudo-component
-----------------
-
-```raku
-my $comp = Rakudo-component;
-```
-
-Returns a `SBOM::Component` object representing the version of Rakudo is running.
 
 VM-component
 ------------

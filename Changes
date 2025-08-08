@@ -3,6 +3,7 @@ Revision history for SBOM::Raku
 {{$NEXT}}
     - "source-sbom" now also adds dependencies on Rakudo
       and the VM used for the tool that created the SBOM
+    - Also export "contact" sub
     - More coverage testing (back to 90%)
     - Add "Rakudo-component" and "VM-component"
     - Add dependency on Rakudo::CORE::META to be able to

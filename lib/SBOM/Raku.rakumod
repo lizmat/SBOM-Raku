@@ -8,8 +8,8 @@ use Identity::Utils:ver<0.0.28+>:auth<zef:lizmat> <
   ecosystem is-pinned issue-tracker-url raku-land-url short-name
   source-distribution-url ver
 >;
-use String::Utils:ver<0.0.35+>:auth<zef:lizmat> <
-  after before
+use String::Utils:ver<0.0.36+>:auth<zef:lizmat> <
+  after before describe-Version
 >;
 
 use SBOM::CycloneDX:ver<0.0.12+>:auth<zef:lizmat>;
@@ -21,6 +21,14 @@ use SBOM::subsets:ver<0.0.12+>:auth<zef:lizmat> <
 >;
 
 #- helper subs -----------------------------------------------------------------
+my sub reference($url, $type) {
+    SBOM::Reference.new(
+      :$url,
+      :type($type ~~ Str ?? ReferenceSource($type) !! $type)
+    )
+}
+
+#- contact ---------------------------------------------------------------------
 my %contact;
 my $contact-lock := Lock.new;
 
@@ -53,25 +61,6 @@ my sub contact(Str:D $string) {
     $contact-lock
       ?? $contact-lock.protect: &produce-contact
       !! produce-contact
-}
-
-# Handle creation of an SBOM::Reference object
-my sub reference($url, $type) {
-    SBOM::Reference.new(
-      :$url,
-      :type($type ~~ Str ?? ReferenceSource($type) !! $type)
-    )
-}
-
-# Normalize a Version object to tag - commits g sha
-my sub normalize-Version(Str() $version) {
-    if after($version,"g") -> $sha {
-        my @major = before($version,"g").split(".");
-        "@major.head(*-1).join(".")-@major.tail()g$sha.subst('.',:global)"
-    }
-    else {
-        $version
-    }
 }
 
 #- authors ---------------------------------------------------------------------
@@ -257,7 +246,7 @@ my sub MoarVM-component() {
     my $VM-name := $VM.name;
     my $VM-auth := $VM.auth;
     my $VM-url  := "https://github.com/MoarVM/MoarVM.git";
-    my $VM-vers := normalize-Version($VM.version);
+    my $VM-vers := describe-Version($VM.version);
     my $VM-sha  := after($VM-vers,"g") // $VM-vers;
 
     SBOM::Component.new:
@@ -510,7 +499,7 @@ my sub modernize-META6(
             $depends = [$depends] if $depends ~~ Str;
 
             # An array is old style, so convert to new
-            if $depends ~~ Positional {
+            if $depends ~~ Positional && $depends.elems {
                 my %depends;
                 %depends<runtime><requires> := $depends<>;
                 $depends = %depends;
@@ -543,14 +532,14 @@ my sub EXPORT(*@names) {
                  UNIT::{"&$_"}:p
              }
              else {
-                 my ($in,$out) = .split(':', 2);  # UNCOVERABLE
-                 if $out && UNIT::{"&$in"} -> &code {  # UNCOVERABLE
-                     Pair.new: "&$out", &code  # UNCOVERABLE
+                 my ($in,$out) = .split(':', 2);
+                 if $out && UNIT::{"&$in"} -> &code {
+                     Pair.new: "&$out", &code
                  }
              }
          }
       !! <
-           authors component component-hash licenses metadata
+           authors component component-hash contact licenses metadata
            metadata-hash modernize-META6 produce-source-sbom
            Rakudo-component source-sbom source-sbom-hash VM-component
          >.map({  # UNCOVERABLE
