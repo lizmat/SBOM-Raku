@@ -4,7 +4,7 @@
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-08-07T20:48:24+00:00",
+    "timestamp": "2025-08-08T10:37:52+00:00",
     "lifecycles": [
       {
         "phase": "pre-build"
@@ -203,7 +203,7 @@
       "publisher": "The MoarVM Team",
       "group": "The MoarVM Team",
       "name": "Moar",
-      "version": "2025.06.5-gb1c74b8d8",
+      "version": "2025.06-5-gb1c74b8d8",
       "description": "Short for \"Metamodel On A Runtime\", MoarVM is a modern virtual machine built for the Rakudo compiler and the NQP Compiler Toolchain.",
       "scope": "required",
       "licenses": [
@@ -701,7 +701,7 @@
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "String::Utils",
-      "version": "0.0.35",
+      "version": "0.0.36",
       "description": "Provide some optimized string functions",
       "scope": "required",
       "licenses": [
@@ -713,14 +713,14 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/String::Utils@0.0.35",
+      "purl": "pkg:raku/zef:lizmat/String::Utils@0.0.36",
       "externalReferences": [
         {
           "url": "https://github.com/lizmat/String-Utils",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/String::Utils?v=0.0.35",
+          "url": "https://raku.land/zef:lizmat/String::Utils?v=0.0.36",
           "type": "documentation"
         },
         {
@@ -732,7 +732,67 @@
           "type": "license"
         },
         {
-          "url": "https://github.com/lizmat/String-Utils/archive/refs/tags/0.0.35.zip",
+          "url": "https://github.com/lizmat/String-Utils/archive/refs/tags/0.0.36.zip",
+          "type": "source-distribution"
+        }
+      ],
+      "tags": [
+        "STRING",
+        "UTIL",
+        "CHOMP",
+        "SHA1",
+        "STEM",
+        "NGRAM",
+        "NAUGHTY",
+        "WORD",
+        "MARKS"
+      ]
+    },
+    {
+      "type": "library",
+      "mime-type": "text/plain",
+      "bom-ref": "pkg:raku/zef:lizmat/String::Utils?vers=vers:raku/%3E=0.0.36",
+      "authors": [
+        {
+          "bom-ref": "ElizabethMattijsen",
+          "name": "Elizabeth Mattijsen"
+        }
+      ],
+      "publisher": "zef",
+      "group": "zef:lizmat",
+      "name": "String::Utils",
+      "version": "0.0.36",
+      "description": "Provide some optimized string functions",
+      "scope": "required",
+      "licenses": [
+        {
+          "license": {
+            "id": "Artistic-2.0",
+            "acknowledgement": "declared",
+            "url": "https://spdx.org/licenses/Artistic-2.0.json"
+          }
+        }
+      ],
+      "purl": "pkg:raku/zef:lizmat/String::Utils@0.0.36",
+      "externalReferences": [
+        {
+          "url": "https://github.com/lizmat/String-Utils",
+          "type": "distribution"
+        },
+        {
+          "url": "https://raku.land/zef:lizmat/String::Utils?v=0.0.36",
+          "type": "documentation"
+        },
+        {
+          "url": "https://github.com/lizmat/String-Utils/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://spdx.org/licenses/Artistic-2.0.json",
+          "type": "license"
+        },
+        {
+          "url": "https://github.com/lizmat/String-Utils/archive/refs/tags/0.0.36.zip",
           "type": "source-distribution"
         }
       ],
@@ -992,7 +1052,7 @@
       ]
     },
     {
-      "ref": "pkg:raku/zef:lizmat/String::Utils?vers=vers:raku/%3E=0.0.35"
+      "ref": "pkg:raku/zef:lizmat/String::Utils?vers=vers:raku/%3E=0.0.36"
     },
     {
       "ref": "pkg:raku/zef:raku-community-modules/OpenSSL?vers=vers:raku/%3E=0.2.5"
