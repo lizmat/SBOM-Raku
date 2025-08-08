@@ -342,7 +342,7 @@ my multi sub source-sbom-hash(
     # Recursively find dependencies
     for dependencies-from-meta(%json, :stage<all>) -> $requirement {
         # Can find this
-        with meta($requirement) -> %json {
+        with $requirement && meta($requirement) -> %json {
 
             my $bom-ref           := purlize $requirement;
             %components{$bom-ref} := component %json, :$bom-ref;
@@ -385,13 +385,18 @@ my sub tar-sbom(IO() $io, *%_) {
 my sub tar-sbom-hash(IO() $io, *%in) {
     die "'$io' does not exist" unless $io.e;
 
+    # Some tar files have an upper directory, so we need to search
+    my $proc := run "tar", "tf", $io, :err, :out;
+    die $proc.err.slurp(:close) if $proc.exitcode;
+
     # Try to extract the META6.json from the tar file
-    my $path := "&before($io.basename,'.tar')/META6.json";
-    my $proc := run "tar", "xf", $io, "--to-stdout", $path, :err, :out;
+    my $path := $proc.out.lines(:close).first(*.ends-with("META6.json"));
+       $proc := run "tar", "xf", $io, "--to-stdout", $path, :err, :out;
     die $proc.err.slurp(:close) if $proc.exitcode;
 
     # Create a hash to work with
-    my %out := source-sbom-hash(from-json $proc.out.slurp(:close), |%in);
+    my $json := $proc.out.slurp(:close);
+    my %out  := source-sbom-hash(from-json($json), |%in);
 
     # Put in the hashes
     my $metadata  := %out<metadata>;
