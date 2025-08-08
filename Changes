@@ -1,6 +1,8 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+
+0.0.10  2025-08-08T18:50:20+02:00
     - Add "tar-sbom-hash" and "tar-sbom"
     - Rename "produce-sbom" to "produce-source-sbom"
     - Bump dependency on SBOM::CycloneDX to get
