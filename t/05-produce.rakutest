@@ -7,7 +7,6 @@ my $in  := $*PROGRAM.parent.sibling("META6.json");
 my $out := $*PROGRAM.sibling("produced.json");
 
 $out.unlink;  # make sure there's nothing now
-LEAVE .unlink with $out;
 
 lives-ok { produce $in, $out }, 'did we survive producing';
 
