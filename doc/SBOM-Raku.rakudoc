@@ -288,6 +288,24 @@ workhorse of the C<modernize-meta> script, so it's included here for
 convenience.  For more info on the changes, see the documentation
 of the script.
 
+=head2 Rakudo-component
+
+=begin code :lang<raku>
+my $comp = Rakudo-component;
+=end code
+
+Returns a C<SBOM::Component> object representing the version of Rakudo
+is running.
+
+=head2 VM-component
+
+=begin code :lang<raku>
+my $comp = VM-component;
+=end code
+
+Returns a C<SBOM::Component> object representing the value of C<$*VM>
+that is currently set.
+
 =head1 AUTHOR
 
 Elizabeth Mattijsen <liz@raku.rocks>

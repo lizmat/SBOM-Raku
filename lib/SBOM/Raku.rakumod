@@ -1,11 +1,15 @@
 use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
 use OpenSSL::Digest:ver<0.2.5+>:auth<zef:raku-community-modules>;
 use PURL:ver<0.0.14+>:auth<zef:lizmat>;
+use Rakudo::CORE::META:ver<0.0.11+>:auth<zef:lizmat>;
 
 use Identity::Utils:ver<0.0.28+>:auth<zef:lizmat> <
   auth build meta dependencies-from-meta distribution-name
   ecosystem is-pinned issue-tracker-url raku-land-url short-name
   source-distribution-url ver
+>;
+use String::Utils:ver<0.0.35+>:auth<zef:lizmat> <
+  after before
 >;
 
 use SBOM::CycloneDX:ver<0.0.12+>:auth<zef:lizmat>;
@@ -51,6 +55,25 @@ my sub contact(Str:D $string) {
       !! produce-contact
 }
 
+# Handle creation of an SBOM::Reference object
+my sub reference($url, $type) {
+    SBOM::Reference.new(
+      :$url,
+      :type($type ~~ Str ?? ReferenceSource($type) !! $type)
+    )
+}
+
+# Normalize a Version object to tag - commits g sha
+my sub normalize-Version(Str() $version) {
+    if after($version,"g") -> $sha {
+        my @major = before($version,"g").split(".");
+        "@major.head(*-1).join(".")-@major.tail()g$sha.subst('.',:global)"
+    }
+    else {
+        $version
+    }
+}
+
 #- authors ---------------------------------------------------------------------
 my proto sub authors(|) {*}
 my multi sub authors(%json) {
@@ -67,6 +90,7 @@ my multi sub authors(%json, %out) {
 
 #- licenses --------------------------------------------------------------------
 my proto sub licenses(|) {*}
+my multi sub licenses(Str:D $license) { licenses((:$license).Map) }
 my multi sub licenses(%json) {
     with %json<license> -> $license {
         my %args = acknowledgement => BEGIN Acknowledgement("declared");
@@ -104,8 +128,8 @@ my multi sub component-hash(
   *%in
 ) {
     my %out;
-    %out<type>  := ComponentType($type);  # throws if invalid
-    %out<scope> := Scope($scope);         # throws if invalid
+    %out<type>  := ComponentType(%json<type> // $type);   # throws if invalid
+    %out<scope> := Scope(       %json<scope> // $scope);  # throws if invalid
 
     %out<name>    := %json<name>    // die "Name must be specified";
     %out<version> := %json<version> // die "Version must be specified";
@@ -126,12 +150,12 @@ my multi sub component-hash(
     %out<copyright>   := $_ with %json<copyright>;
     %out<description> := $_ with %json<description>;
 
-    my @externalReferences = SBOM::Reference.new(
-      :url(raku-land-url($identity)),
-      :type(BEGIN ReferenceSource("documentation"))  # UNCOVERABLE
+    my @externalReferences = reference(
+      raku-land-url($identity),
+      BEGIN ReferenceSource("documentation")
     );
     my sub add-reference($url, $type) {
-        @externalReferences.push: SBOM::Reference.new(:$url, :$type)
+        @externalReferences.push: reference $url, $type
     }
     my sub add-source-references($url is copy, :$no-issue-tracker) {
         $url .= subst(".git");
@@ -192,10 +216,10 @@ my multi sub component-hash(
     %out
 }
 
+#- tools -----------------------------------------------------------------------
+my $tools := BEGIN SBOM::Tool.new(:components(component($?DISTRIBUTION.meta),));
 
 #- metadata --------------------------------------------------------------------
-BEGIN my $tools = SBOM::Tool.new(:components(component($?DISTRIBUTION.meta),));
-
 my sub metadata(|c) { SBOM::Metadata.new: |metadata-hash(|c), :raw-error }
 
 my proto sub metadata-hash(|) {*}
@@ -220,6 +244,69 @@ my multi sub metadata-hash(
     %out
 }
 
+#- VM-component ----------------------------------------------------------------
+my sub VM-component() {
+    my $name := $*VM.name;
+    $name eq 'moar'
+      ?? MoarVM-component()
+      !! die "No support for VM '$name' yet"
+}
+
+my sub MoarVM-component() {
+    my $VM      := $*VM;
+    my $VM-name := $VM.name;
+    my $VM-auth := $VM.auth;
+    my $VM-url  := "https://github.com/MoarVM/MoarVM.git";
+    my $VM-vers := normalize-Version($VM.version);
+    my $VM-sha  := after($VM-vers,"g") // $VM-vers;
+
+    SBOM::Component.new:
+      bom-ref     => $VM-name,
+      type        => ComponentType("platform"),
+      scope       => Scope("required"),
+      authors     => [contact($VM-auth)],
+      name        => $VM-name.tc,
+      description => $VM.desc,
+      copyright   => "© 2012 - {DateTime.now.year} Jonathan Worthington",
+      group       => $VM-auth,
+      publisher   => $VM-auth,
+      version     => $VM-vers,
+      licenses    => licenses("Artistic-2.0"),
+      externalReferences => (
+        reference($VM-url.subst(".git"),      "distribution"),
+        reference(issue-tracker-url($VM-url), "issue-tracker"),
+        reference("irc://libera.chat/moarvm", "chat"),
+        reference(
+          source-distribution-url($VM-url, $VM-sha), "source-distribution"
+        ),
+      )
+}
+
+#- Rakudo-component ------------------------------------------------------------
+my sub Rakudo-component() {
+    my %META    := %Rakudo::CORE::META;
+    my %support := %META<support>;
+
+    SBOM::Component.new:
+      bom-ref     => %META<name>.subst(/ \s+ /, :global),
+      type        => ComponentType("platform"),
+      scope       => Scope("required"),
+      authors     => %META<authors>.map(&contact).List,
+      name        => %META<name>,
+      description => %META<description>,
+      copyright   => "© 2006 - {DateTime.now.year} %META<auth>",
+      group       => %META<authors>.head,
+      publisher   => %META<authors>.head,
+      version     => %META<version>,
+      licenses    => licenses(%META),
+      externalReferences => (
+        reference("https://github.com/rakudo/rakudo", "distribution"),
+        reference(%support<bugtracker>,               "issue-tracker"),
+        reference(%support<source>,                   "source-distribution"),
+        reference(%support<irc>,                      "chat"),
+      )
+}
+
 #- source-sbom -----------------------------------------------------------------
 my sub source-sbom(Any:D $source, *%_) {
     SBOM::CycloneDX.new: |source-sbom-hash($source, |%_), :raw-error
@@ -241,9 +328,19 @@ my multi sub source-sbom-hash(
 
     my sub purlize($requirement) { PURL.from-identity($requirement).Str }
 
+    # Initialize lookups with Rakudo / VM components / dependencies
+    my $vm-component     := VM-component;
+    my $rakudo-component := Rakudo-component;
+    my %components = ($vm-component, $rakudo-component).map: { .bom-ref => $_ }
+    my %refs =
+      $tools.components.head.bom-ref => %(  # tool depends on Rakudo
+        $rakudo-component.bom-ref => $rakudo-component.name
+      ),
+      $rakudo-component.bom-ref => %(       # Rakudo depends on VM
+        $vm-component.bom-ref => $vm-component.name
+      );
+
     # Code to recursively find dependencies
-    my %components;
-    my %refs;
     for dependencies-from-meta(%json, :stage<all>) -> $requirement {
         # Can find this
         with meta($requirement) -> %json {
@@ -341,11 +438,17 @@ my sub modernize-META6(
             mark-as-changed;
         }
 
-        without %json<auth> {
-            $_ = "zef:$_" with try from-json(
+        without %json<auth> -> $new is raw {
+            if $auth {
+                $new = $auth;  # UNCOVERABLE
+                mark-as-changed;
+            }
+            orwith try from-json(
               $*HOME.add("/.fez-config.json").slurp, :immutable
-            )<un>;
-            mark-as-changed;
+            )<un> {
+                $new = "zef:$_";
+                mark-as-changed;
+            }
         }
 
         without %json<authors> {
@@ -358,7 +461,7 @@ my sub modernize-META6(
 
         with $production {
             unless %json<production> eqv $_ {
-                %json<production> = $_;
+                %json<production> = $_;  # UNCOVERABLE
                 mark-as-changed;
             }
         }
@@ -395,15 +498,15 @@ my sub modernize-META6(
                 }
             }
         }
-        elsif $source-url {
-            %json<support> = {
+        elsif $source-url {  # UNCOVERABLE
+            %json<support> = {  # UNCOVERABLE
               bugtracker => issue-tracker-url($source-url),
               source     => $source-url
             }
             mark-as-changed;
         }
 
-        with %json<depends> -> $depends {
+        with %json<depends> -> $depends is raw {
             $depends = [$depends] if $depends ~~ Str;
 
             # An array is old style, so convert to new
@@ -449,7 +552,7 @@ my sub EXPORT(*@names) {
       !! <
            authors component component-hash licenses metadata
            metadata-hash modernize-META6 produce-source-sbom
-           source-sbom source-sbom-hash
+           Rakudo-component source-sbom source-sbom-hash VM-component
          >.map({  # UNCOVERABLE
              "&$_" => UNIT::{"&$_"}  # UNCOVERABLE
          }).Map
@@ -457,6 +560,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.8>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.9>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4

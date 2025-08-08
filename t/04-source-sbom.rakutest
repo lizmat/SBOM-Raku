@@ -165,6 +165,94 @@ sub sbom-ok($sbom, $source) is test-assertion {
   },
   "components": [
     {
+      "type": "platform",
+      "bom-ref": "Rakudo",
+      "authors": [
+        {
+          "bom-ref": "RakudoCoreDevelopers",
+          "name": "Rakudo Core Developers"
+        }
+      ],
+      "publisher": "Rakudo Core Developers",
+      "group": "Rakudo Core Developers",
+      "name": "Rakudo",
+      "version": "2025.06.1-10-g5e8d7f656",
+      "description": "The Rakudo™ Compiler implementing the Raku® Programming Language",
+      "scope": "required",
+      "licenses": [
+        {
+          "license": {
+            "id": "Artistic-2.0",
+            "acknowledgement": "declared",
+            "url": "https://spdx.org/licenses/Artistic-2.0.json"
+          }
+        }
+      ],
+      "copyright": "© 2006 - 2025 Yet Another Society",
+      "externalReferences": [
+        {
+          "url": "https://github.com/rakudo/rakudo",
+          "type": "distribution"
+        },
+        {
+          "url": "https://github.com/rakudo/rakudo/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/rakudo/rakudo/archive/5e8d7f656.zip",
+          "type": "source-distribution"
+        },
+        {
+          "url": "irc://libera.chat/raku",
+          "type": "chat"
+        }
+      ]
+    },
+    {
+      "type": "platform",
+      "bom-ref": "moar",
+      "authors": [
+        {
+          "bom-ref": "TheMoarVMTeam",
+          "name": "The MoarVM Team"
+        }
+      ],
+      "publisher": "The MoarVM Team",
+      "group": "The MoarVM Team",
+      "name": "Moar",
+      "version": "2025.06.5-gb1c74b8d8",
+      "description": "Short for \"Metamodel On A Runtime\", MoarVM is a modern virtual machine built for the Rakudo compiler and the NQP Compiler Toolchain.",
+      "scope": "required",
+      "licenses": [
+        {
+          "license": {
+            "id": "Artistic-2.0",
+            "acknowledgement": "declared",
+            "url": "https://spdx.org/licenses/Artistic-2.0.json"
+          }
+        }
+      ],
+      "copyright": "© 2012 - 2025 Jonathan Worthington",
+      "externalReferences": [
+        {
+          "url": "https://github.com/MoarVM/MoarVM",
+          "type": "distribution"
+        },
+        {
+          "url": "https://github.com/MoarVM/MoarVM/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "irc://libera.chat/moarvm",
+          "type": "chat"
+        },
+        {
+          "url": "https://github.com/MoarVM/MoarVM.git/archive/refs/tags/b1c74b8d8.zip",
+          "type": "source-distribution"
+        }
+      ]
+    },
+    {
       "type": "library",
       "mime-type": "text/plain",
       "bom-ref": "pkg:raku/Net::DNS",
@@ -504,6 +592,63 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
+      "bom-ref": "pkg:raku/zef:lizmat/Rakudo::CORE::META?vers=vers:raku/%3E=0.0.10",
+      "authors": [
+        {
+          "bom-ref": "ElizabethMattijsen",
+          "name": "Elizabeth Mattijsen"
+        }
+      ],
+      "publisher": "zef",
+      "group": "zef:lizmat",
+      "name": "Rakudo::CORE::META",
+      "version": "0.0.11",
+      "description": "Provide zef compatible meta-data for Rakudo",
+      "scope": "required",
+      "licenses": [
+        {
+          "license": {
+            "id": "Artistic-2.0",
+            "acknowledgement": "declared",
+            "url": "https://spdx.org/licenses/Artistic-2.0.json"
+          }
+        }
+      ],
+      "purl": "pkg:raku/zef:lizmat/Rakudo::CORE::META@0.0.11",
+      "externalReferences": [
+        {
+          "url": "https://github.com/lizmat/Rakudo-CORE-META",
+          "type": "distribution"
+        },
+        {
+          "url": "https://raku.land/zef:lizmat/Rakudo::CORE::META?v=0.0.11",
+          "type": "documentation"
+        },
+        {
+          "url": "https://github.com/lizmat/Rakudo-CORE-META/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://spdx.org/licenses/Artistic-2.0.json",
+          "type": "license"
+        },
+        {
+          "url": "https://github.com/lizmat/Rakudo-CORE-META/archive/refs/tags/0.0.11.zip",
+          "type": "source-distribution"
+        },
+        {
+          "url": "mailto:liz@raku.rocks",
+          "type": "support"
+        }
+      ],
+      "tags": [
+        "CORE",
+        "META"
+      ]
+    },
+    {
+      "type": "library",
+      "mime-type": "text/plain",
       "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.12",
       "authors": [
         {
@@ -821,6 +966,12 @@ sub sbom-ok($sbom, $source) is test-assertion {
   ],
   "dependencies": [
     {
+      "ref": "Rakudo",
+      "dependsOn": [
+        "moar"
+      ]
+    },
+    {
       "ref": "pkg:raku/cpan:TIMOTIMO/JSON::Fast?vers=vers:raku/%3E=0.19"
     },
     {
@@ -840,6 +991,9 @@ sub sbom-ok($sbom, $source) is test-assertion {
       ]
     },
     {
+      "ref": "pkg:raku/zef:lizmat/Rakudo::CORE::META?vers=vers:raku/%3E=0.0.10"
+    },
+    {
       "ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.12",
       "dependsOn": [
         "pkg:raku/Net::DNS",
@@ -847,6 +1001,15 @@ sub sbom-ok($sbom, $source) is test-assertion {
         "pkg:raku/zef:demayl/Email::Valid?vers=vers:raku/%3E=1.0.7",
         "pkg:raku/zef:lizmat/PURL?vers=vers:raku/%3E=0.0.14"
       ]
+    },
+    {
+      "ref": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
+      "dependsOn": [
+        "Rakudo"
+      ]
+    },
+    {
+      "ref": "pkg:raku/zef:lizmat/String::Utils?vers=vers:raku/%3E=0.0.35"
     },
     {
       "ref": "pkg:raku/zef:raku-community-modules/OpenSSL?vers=vers:raku/%3E=0.2.5"

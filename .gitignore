@@ -3,3 +3,4 @@
 /releases/
 *.rakucov
 INVALID-SBOMS
+wop*

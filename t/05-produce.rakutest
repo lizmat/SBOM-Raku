@@ -1,0 +1,17 @@
+use Test;
+use SBOM::Raku <produce-source-sbom:produce from-json:json>;
+
+plan 3;
+
+my $in  := $*PROGRAM.parent.sibling("META6.json");
+my $out := $*PROGRAM.sibling("produced.json");
+
+$out.unlink;  # make sure there's nothing now
+LEAVE .unlink with $out;
+
+lives-ok { produce $in, $out }, 'did we survive producing';
+
+ok $out.s, 'was a file produced';
+lives-ok { json $out.slurp }, 'did it produce valid json';
+
+# vim: expandtab shiftwidth=4

@@ -1,0 +1,19 @@
+use Test;
+use SBOM::Raku <modernize-META6:modernize from-json:json>;
+
+plan 3;
+
+my $in  := $*PROGRAM.sibling("old.json");
+my $out := $*PROGRAM.sibling("modernized.json");
+
+$out.unlink;  # make sure there's nothing now
+LEAVE .unlink with $out;
+
+lives-ok {
+    modernize $in, $out, :production, 
+}, 'did we survive modernizing';
+
+ok $out.s, 'was a file produced';
+lives-ok { json $out.slurp }, 'did it produce valid json';
+
+# vim: expandtab shiftwidth=4

@@ -1,10 +1,12 @@
 use Test;
-use SBOM::Raku <authors component from-json licenses metadata>;
+use SBOM::Raku <
+  authors component from-json licenses metadata Rakudo-component VM-component
+>;
 
 my $io   := $*PROGRAM.parent.sibling("META6.json");
 my %json := from-json $io.slurp;
 
-plan 4;
+plan 6;
 
 my @authors := authors(%json);
 isa-ok @authors.are, SBOM::Contact;
@@ -17,5 +19,11 @@ isa-ok $component, SBOM::Component;
 
 my $metadata := metadata(%json, :raw-error);
 isa-ok $metadata, SBOM::Metadata;
+
+my $rakudo := Rakudo-component;
+isa-ok $rakudo, SBOM::Component;
+
+my $vm := VM-component;
+isa-ok $vm, SBOM::Component;
 
 # vim: expandtab shiftwidth=4

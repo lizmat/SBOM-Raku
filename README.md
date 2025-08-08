@@ -259,6 +259,24 @@ Optionally takes these named arguments, each taking a `Callable` to be executed 
 
 This subroutine may have limited production value, but it's the workhorse of the `modernize-meta` script, so it's included here for convenience. For more info on the changes, see the documentation of the script.
 
+Rakudo-component
+----------------
+
+```raku
+my $comp = Rakudo-component;
+```
+
+Returns a `SBOM::Component` object representing the version of Rakudo is running.
+
+VM-component
+------------
+
+```raku
+my $comp = VM-component;
+```
+
+Returns a `SBOM::Component` object representing the value of `$*VM` that is currently set.
+
 AUTHOR
 ======
 

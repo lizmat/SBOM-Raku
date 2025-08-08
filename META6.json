@@ -12,7 +12,9 @@
         "JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>",
         "OpenSSL:ver<0.2.5+>:auth<zef:raku-community-modules>",
         "PURL:ver<0.0.14+>:auth<zef:lizmat>",
-        "SBOM::CycloneDX:ver<0.0.12+>:auth<zef:lizmat>"
+        "Rakudo::CORE::META:ver<0.0.10+>:auth<zef:lizmat>",
+        "SBOM::CycloneDX:ver<0.0.12+>:auth<zef:lizmat>",
+        "String::Utils:ver<0.0.35+>:auth<zef:lizmat>"
       ]
     }
   },
@@ -40,5 +42,5 @@
   ],
   "test-depends": [
   ],
-  "version": "0.0.8"
+  "version": "0.0.9"
 }
