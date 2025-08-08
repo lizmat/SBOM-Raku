@@ -657,7 +657,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.12",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.13",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -667,7 +667,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "SBOM::CycloneDX",
-      "version": "0.0.12",
+      "version": "0.0.13",
       "description": "Software Bill Of Materials, CycloneDX style",
       "scope": "required",
       "licenses": [
@@ -679,14 +679,14 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.12",
+      "purl": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.13",
       "externalReferences": [
         {
           "url": "https://github.com/lizmat/SBOM-CycloneDX",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/SBOM::CycloneDX?v=0.0.12",
+          "url": "https://raku.land/zef:lizmat/SBOM::CycloneDX?v=0.0.13",
           "type": "documentation"
         },
         {
@@ -698,7 +698,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
           "type": "license"
         },
         {
-          "url": "https://github.com/lizmat/SBOM-CycloneDX/archive/refs/tags/0.0.12.zip",
+          "url": "https://github.com/lizmat/SBOM-CycloneDX/archive/refs/tags/0.0.13.zip",
           "type": "source-distribution"
         },
         {
@@ -1062,7 +1062,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "ref": "pkg:raku/zef:lizmat/Rakudo::CORE::META?vers=vers:raku/%3E=0.0.10"
     },
     {
-      "ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.12",
+      "ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.13",
       "dependsOn": [
         "pkg:raku/Net::DNS",
         "pkg:raku/cpan:TIMOTIMO/JSON::Fast?vers=vers:raku/%3E=0.19",

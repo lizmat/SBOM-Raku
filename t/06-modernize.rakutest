@@ -7,7 +7,6 @@ my $in  := $*PROGRAM.sibling("old.json");
 my $out := $*PROGRAM.sibling("modernized.json");
 
 $out.unlink;  # make sure there's nothing now
-LEAVE .unlink with $out;
 
 lives-ok {
     modernize $in, $out, :production, 

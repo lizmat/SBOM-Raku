@@ -277,6 +277,28 @@ The `source-sbom-hash` subroutine returns a hash in the format needed to create 
 
 It's main intended use is to be able to tweak the arguments prior to making an `SBOM::CycloneDX` object.
 
+tar-sbom
+--------
+
+```raku
+my $sbom = tar-sbom("releases/SBOM-Raku-0.0.1.tar.gz");
+```
+
+The `tar-sbom` subroutine returns a [SBOM::CycloneDX](https://raku.land/zef:lizmat/SBOM::CycloneDX#sbomcyclonedx) for the given path, which is expected to indicate a tar-file.
+
+tar-sbom-hash
+-------------
+
+```raku
+my %args := tar-sbom-hash("releases/SBOM-Raku-0.0.1.tar.gz");
+# ... perform tweaks
+my $sbom = SBOM::CycloneDX.new(|%args);
+```
+
+The `tar-sbom-hash` subroutine returns a hash in the format needed to create an `SBOM::CycloneDX` object with, from a tar-file that contains a `META6.json` file (or a hash of that representation). Apart from just creating the hash, it will also add crypto hashes for the tar-file to the component in the metadata.
+
+It's main intended use is to be able to tweak the arguments prior to making an `SBOM::CycloneDX` object.
+
 VM-component
 ------------
 

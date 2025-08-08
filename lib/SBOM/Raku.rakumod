@@ -12,13 +12,23 @@ use String::Utils:ver<0.0.36+>:auth<zef:lizmat> <
   after before describe-Version
 >;
 
-use SBOM::CycloneDX:ver<0.0.12+>:auth<zef:lizmat>;
-use SBOM::enums:ver<0.0.12+>:auth<zef:lizmat> <
-  Acknowledgement ComponentType LicenseId Phase ReferenceSource Scope
+use SBOM::CycloneDX:ver<0.0.13+>:auth<zef:lizmat>;
+use SBOM::enums:ver<0.0.13+>:auth<zef:lizmat> <
+  Acknowledgement ComponentType HashAlgorithm LicenseId Phase
+  ReferenceSource Scope
 >;
-use SBOM::subsets:ver<0.0.12+>:auth<zef:lizmat> <
+use SBOM::subsets:ver<0.0.13+>:auth<zef:lizmat> <
   email
 >;
+
+# Quick lookup of hash creation/mapping logic
+my constant @hashers = <MD5 SHA-1 SHA-256 SHA-384 SHA-512>;
+my constant %hasher = @hashers.map: {
+    $_ => ::("\&$_.lc.subst('-')-hex")  # UNCOVERABLE
+}
+my constant %hashnum = @hashers.map: {
+    $_ => HashAlgorithm($_)  # UNCOVERABLE
+}
 
 #- helper subs -----------------------------------------------------------------
 my sub reference($url, $type) {
@@ -217,12 +227,12 @@ my multi sub metadata-hash(IO() $io, *%args) {
 }
 my multi sub metadata-hash(
    %json,
-  :$timestamp = DateTime.new(now.Int),  # only whole seconds
-  :$phase     = "pre-build",
+  :$timestamp,
+  :$phase = "pre-build",
   *%in,
 ) {
     my %out;
-    %out<timestamp>  := $timestamp;
+    %out<timestamp>  := $_ with $timestamp;
     %out<lifecycles> := (SBOM::Lifecycle.new(:$phase),);
     %out<tools>      := $tools;
 
@@ -329,7 +339,7 @@ my multi sub source-sbom-hash(
         $vm-component.bom-ref => $vm-component.name
       );
 
-    # Code to recursively find dependencies
+    # Recursively find dependencies
     for dependencies-from-meta(%json, :stage<all>) -> $requirement {
         # Can find this
         with meta($requirement) -> %json {
@@ -363,6 +373,37 @@ my multi sub source-sbom-hash(
 
     my $metadata := %out<metadata> := metadata(%json, |%in);
     %out<externalReferences> := $metadata.component.externalReferences;
+
+    %out
+}
+
+#- tar-sbom --------------------------------------------------------------------
+my sub tar-sbom(IO() $io, *%_) {
+    SBOM::CycloneDX.new: |tar-sbom-hash($io, |%_), :raw-error
+}
+
+my sub tar-sbom-hash(IO() $io, *%in) {
+    die "'$io' does not exist" unless $io.e;
+
+    # Try to extract the META6.json from the tar file
+    my $path := "&before($io.basename,'.tar')/META6.json";
+    my $proc := run "tar", "xf", $io, "--to-stdout", $path, :err, :out;
+    die $proc.err.slurp(:close) if $proc.exitcode;
+
+    # Create a hash to work with
+    my %out := source-sbom-hash(from-json $proc.out.slurp(:close), |%in);
+
+    # Put in the hashes
+    my $metadata  := %out<metadata>;
+    my %component := $metadata.component.Hash;
+    %component<hashes> := @hashers.map({
+        SBOM::HashedString.new: :alg(%hashnum{$_}), :content(%hasher{$_}($io))
+    }).List;
+
+    # Create a new Metadata object with updated component
+    %out<metadata> := $metadata.update-component(
+      SBOM::Component.new(|%component, :raw-error)
+    );
 
     %out
 }
@@ -541,7 +582,8 @@ my sub EXPORT(*@names) {
       !! <
            authors component component-hash contact licenses metadata
            metadata-hash modernize-META6 produce-source-sbom
-           Rakudo-component source-sbom source-sbom-hash VM-component
+           Rakudo-component source-sbom source-sbom-hash tar-sbom
+           tar-sbom-hash VM-component
          >.map({  # UNCOVERABLE
              "&$_" => UNIT::{"&$_"}  # UNCOVERABLE
          }).Map
@@ -549,6 +591,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.9>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.10>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4

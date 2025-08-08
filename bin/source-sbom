@@ -1,4 +1,4 @@
-use SBOM::Raku:ver<0.0.9>:auth<zef:lizmat> <produce-source-sbom>;
+use SBOM::Raku:ver<0.0.10>:auth<zef:lizmat> <produce-source-sbom>;
 
 my str @errors;
 my sub error(IO::Path:D $io, Str() $) { @errors.push: $io.absolute }

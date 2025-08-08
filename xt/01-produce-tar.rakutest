@@ -1,0 +1,36 @@
+use Test;
+use SBOM::Raku <tar-sbom from-json>;
+
+plan 2;
+
+my $in := $*PROGRAM.parent.sibling("releases/SBOM-Raku-0.0.1.tar.gz");
+my $sbom = tar-sbom $in;
+isa-ok $sbom, SBOM::CycloneDX;
+
+# Make sure the hashes are correct
+my %json := from-json $sbom.JSON;
+is-deeply %json<metadata><component><hashes>,
+  [
+    {
+      alg     => "MD5",
+      content => "fdde0b447f3ada8ba283d485a9949fc2"
+    },
+    {
+      alg     => "SHA-1",
+      content => "763f12bc26a07be81328ff6ccc2e2067f1ac398b"
+    },
+    {
+      alg     => "SHA-256",
+      content => "e59122860b917ac4fcd151369ce5ea99612f05b113b9c06c2a1da227d8d73095"
+    },
+    {
+      alg     => "SHA-384",
+      content => "2d906fb4952316b3cdaea547f39d2951724a5425cf808887ee1e341eecfab3f95b24dc5162657272586c7eefb2eba29c"
+    },
+    {
+      alg     => "SHA-512",
+      content => "45cd0f7295593e0db1d6f91236974c460f4d70380b385cb3c72898c65d5f27e18815fd0e23ebc7c2f7c0d165259cb35feb98c0ea3f85746077c4cfadf425234b"
+    }
+  ], 'Are the hashes repeatable';
+
+# vim: expandtab shiftwidth=4

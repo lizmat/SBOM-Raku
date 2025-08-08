@@ -1,6 +1,10 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Add "tar-sbom-hash" and "tar-sbom"
+    - Rename "produce-sbom" to "produce-source-sbom"
+    - Bump dependency on SBOM::CycloneDX to get
+      SBOM::Metadata.update-component
 
 0.0.9  2025-08-08T12:33:39+02:00
     - "source-sbom" now also adds dependencies on Rakudo
