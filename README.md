@@ -78,11 +78,14 @@ say comp |%args;
 
 Apart from the subroutines provided by the `SBOM::Raku` distribution, it also possible to import the following subroutines from other packages, but which are used internally by `SBOM::Raku`:
 
-  * JSON::Fast: from-json to-json
-
-  * Identity::Utils: auth build compunit ecosystem is-pinned raku-land-url short-name ver
-
-  * String::Utils: sha1
+<table class="pod-table">
+<thead><tr>
+<th>Package</th> <th>importable subroutines</th>
+</tr></thead>
+<tbody>
+<tr> <td>JSON::Fast</td> <td>from-json to-json</td> </tr> <tr> <td>Identity::Utils</td> <td>auth build meta dependencies-from-meta distribution-name ecosystem is-pinned issue-tracker-url raku-land-url short-name source-distribution-url ver</td> </tr> <tr> <td>String::Utils</td> <td>after before describe-Version</td> </tr>
+</tbody>
+</table>
 
 SUBROUTINES
 ===========
