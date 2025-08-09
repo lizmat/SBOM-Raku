@@ -1,7 +1,7 @@
 use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
 use OpenSSL::Digest:ver<0.2.5+>:auth<zef:raku-community-modules>;
 use PURL:ver<0.0.14+>:auth<zef:lizmat>;
-use Rakudo::CORE::META:ver<0.0.11+>:auth<zef:lizmat>;
+use Rakudo::CORE::META:ver<0.0.12+>:auth<zef:lizmat>;
 
 use Identity::Utils:ver<0.0.28+>:auth<zef:lizmat> <
   auth build meta dependencies-from-meta distribution-name
@@ -596,6 +596,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.10>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.11>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4

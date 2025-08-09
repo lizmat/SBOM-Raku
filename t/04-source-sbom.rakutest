@@ -600,7 +600,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/Rakudo::CORE::META?vers=vers:raku/%3E=0.0.10",
+      "bom-ref": "pkg:raku/zef:lizmat/Rakudo::CORE::META?vers=vers:raku/%3E=0.0.12",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -610,7 +610,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "Rakudo::CORE::META",
-      "version": "0.0.11",
+      "version": "0.0.12",
       "description": "Provide zef compatible meta-data for Rakudo",
       "scope": "required",
       "licenses": [
@@ -622,14 +622,14 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/Rakudo::CORE::META@0.0.11",
+      "purl": "pkg:raku/zef:lizmat/Rakudo::CORE::META@0.0.12",
       "externalReferences": [
         {
           "url": "https://github.com/lizmat/Rakudo-CORE-META",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/Rakudo::CORE::META?v=0.0.11",
+          "url": "https://raku.land/zef:lizmat/Rakudo::CORE::META?v=0.0.12",
           "type": "documentation"
         },
         {
@@ -641,7 +641,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
           "type": "license"
         },
         {
-          "url": "https://github.com/lizmat/Rakudo-CORE-META/archive/refs/tags/0.0.11.zip",
+          "url": "https://github.com/lizmat/Rakudo-CORE-META/archive/refs/tags/0.0.12.zip",
           "type": "source-distribution"
         },
         {
@@ -1059,7 +1059,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       ]
     },
     {
-      "ref": "pkg:raku/zef:lizmat/Rakudo::CORE::META?vers=vers:raku/%3E=0.0.10"
+      "ref": "pkg:raku/zef:lizmat/Rakudo::CORE::META?vers=vers:raku/%3E=0.0.12"
     },
     {
       "ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.13",

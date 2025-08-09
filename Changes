@@ -1,6 +1,10 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Make "tar-sbom-hash" a bit more resilient for
+      strangely formatted ta files
+    - Update list of importable subroutines
+    - Bump dependency on Rakudo::CORE::META because we can
 
 0.0.10  2025-08-08T18:50:20+02:00
     - Add "tar-sbom-hash" and "tar-sbom"

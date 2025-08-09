@@ -88,9 +88,12 @@ Apart from the subroutines provided by the C<SBOM::Raku> distribution,
 it also possible to import the following subroutines from other packages,
 but which are used internally by C<SBOM::Raku>:
 
-=item JSON::Fast: from-json to-json
-=item Identity::Utils: auth build compunit ecosystem is-pinned raku-land-url short-name ver
-=item String::Utils: sha1
+=table
+Package         | importable subroutines
+----------------+-----------------------
+JSON::Fast      | from-json, to-json
+Identity::Utils | auth, build, meta, dependencies-from-meta, distribution-name, ecosystem, is-pinned, issue-tracker-url, raku-land-url, short-name, source-distribution-url, ver
+String::Utils   | after, before, describe-Version
 
 =head1 SUBROUTINES
 

@@ -83,7 +83,7 @@ Apart from the subroutines provided by the `SBOM::Raku` distribution, it also po
 <th>Package</th> <th>importable subroutines</th>
 </tr></thead>
 <tbody>
-<tr> <td>JSON::Fast</td> <td>from-json to-json</td> </tr> <tr> <td>Identity::Utils</td> <td>auth build meta dependencies-from-meta distribution-name ecosystem is-pinned issue-tracker-url raku-land-url short-name source-distribution-url ver</td> </tr> <tr> <td>String::Utils</td> <td>after before describe-Version</td> </tr>
+<tr> <td>JSON::Fast</td> <td>from-json, to-json</td> </tr> <tr> <td>Identity::Utils</td> <td>auth, build, meta, dependencies-from-meta, distribution-name, ecosystem, is-pinned, issue-tracker-url, raku-land-url, short-name, source-distribution-url, ver</td> </tr> <tr> <td>String::Utils</td> <td>after, before, describe-Version</td> </tr>
 </tbody>
 </table>
 
