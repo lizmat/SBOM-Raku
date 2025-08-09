@@ -1,6 +1,8 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+
+0.0.11  2025-08-09T12:22:42+02:00
     - Make "tar-sbom-hash" a bit more resilient for
       strangely formatted ta files
     - Update list of importable subroutines
