@@ -12,12 +12,12 @@ use String::Utils:ver<0.0.36+>:auth<zef:lizmat> <
   after before describe-Version
 >;
 
-use SBOM::CycloneDX:ver<0.0.13+>:auth<zef:lizmat>;
-use SBOM::enums:ver<0.0.13+>:auth<zef:lizmat> <
+use SBOM::CycloneDX:ver<0.0.15+>:auth<zef:lizmat>;
+use SBOM::enums:ver<0.0.15+>:auth<zef:lizmat> <
   Acknowledgement ComponentType HashAlgorithm LicenseId Phase
   ReferenceSource Scope
 >;
-use SBOM::subsets:ver<0.0.13+>:auth<zef:lizmat> <
+use SBOM::subsets:ver<0.0.15+>:auth<zef:lizmat> <
   email
 >;
 
@@ -596,6 +596,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.11>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.12>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4

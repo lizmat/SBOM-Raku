@@ -263,6 +263,57 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
+      "bom-ref": "pkg:raku/MIME::Base64",
+      "authors": [
+        {
+          "bom-ref": "AdrianWhite",
+          "name": "Adrian White"
+        }
+      ],
+      "publisher": "zef",
+      "group": "zef:raku-community-modules",
+      "name": "MIME::Base64",
+      "version": "1.2.4",
+      "description": "Encoding and decoding Base64 ASCII strings",
+      "scope": "required",
+      "licenses": [
+        {
+          "license": {
+            "id": "Artistic-2.0",
+            "acknowledgement": "declared",
+            "url": "https://spdx.org/licenses/Artistic-2.0.json"
+          }
+        }
+      ],
+      "purl": "pkg:raku/zef:raku-community-modules/MIME::Base64@1.2.4",
+      "externalReferences": [
+        {
+          "url": "https://raku.land/zef:raku-community-modules/MIME::Base64?v=1.2.4",
+          "type": "documentation"
+        },
+        {
+          "url": "https://github.com/raku-community-modules/MIME-Base64/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://spdx.org/licenses/Artistic-2.0.json",
+          "type": "license"
+        },
+        {
+          "url": "mailto:community@raku.org",
+          "type": "support"
+        }
+      ],
+      "tags": [
+        "MIME",
+        "BASE64",
+        "ENCODING",
+        "DECODING"
+      ]
+    },
+    {
+      "type": "library",
+      "mime-type": "text/plain",
       "bom-ref": "pkg:raku/Net::DNS",
       "authors": [
         {
@@ -420,6 +471,53 @@ sub sbom-ok($sbom, $source) is test-assertion {
         "Email",
         "Valid",
         "Validator"
+      ]
+    },
+    {
+      "type": "library",
+      "mime-type": "text/plain",
+      "bom-ref": "pkg:raku/zef:leont/YAMLish?vers=vers:raku/%3E=0.1.2",
+      "authors": [
+        {
+          "bom-ref": "LeonTimmermans",
+          "name": "Leon Timmermans"
+        }
+      ],
+      "publisher": "zef",
+      "group": "zef:leont",
+      "name": "YAMLish",
+      "version": "0.1.2",
+      "description": "a YAML parser/emitter written in pure raku",
+      "scope": "required",
+      "licenses": [
+        {
+          "license": {
+            "id": "Artistic-2.0",
+            "acknowledgement": "declared",
+            "url": "https://spdx.org/licenses/Artistic-2.0.json"
+          }
+        }
+      ],
+      "purl": "pkg:raku/zef:leont/YAMLish@0.1.2",
+      "externalReferences": [
+        {
+          "url": "git://github.com/leont/yamlish",
+          "type": "distribution"
+        },
+        {
+          "url": "https://raku.land/zef:leont/YAMLish?v=0.1.2",
+          "type": "documentation"
+        },
+        {
+          "url": "https://spdx.org/licenses/Artistic-2.0.json",
+          "type": "license"
+        }
+      ],
+      "tags": [
+        "YAML",
+        "format",
+        "parser",
+        "serialization"
       ]
     },
     {
@@ -657,7 +755,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.13",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.15",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -667,7 +765,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "SBOM::CycloneDX",
-      "version": "0.0.13",
+      "version": "0.0.15",
       "description": "Software Bill Of Materials, CycloneDX style",
       "scope": "required",
       "licenses": [
@@ -679,14 +777,14 @@ sub sbom-ok($sbom, $source) is test-assertion {
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.13",
+      "purl": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.15",
       "externalReferences": [
         {
           "url": "https://github.com/lizmat/SBOM-CycloneDX",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/SBOM::CycloneDX?v=0.0.13",
+          "url": "https://raku.land/zef:lizmat/SBOM::CycloneDX?v=0.0.15",
           "type": "documentation"
         },
         {
@@ -698,7 +796,7 @@ sub sbom-ok($sbom, $source) is test-assertion {
           "type": "license"
         },
         {
-          "url": "https://github.com/lizmat/SBOM-CycloneDX/archive/refs/tags/0.0.13.zip",
+          "url": "https://github.com/lizmat/SBOM-CycloneDX/archive/refs/tags/0.0.15.zip",
           "type": "source-distribution"
         },
         {
@@ -1062,16 +1160,18 @@ sub sbom-ok($sbom, $source) is test-assertion {
       "ref": "pkg:raku/zef:lizmat/Rakudo::CORE::META?vers=vers:raku/%3E=0.0.12"
     },
     {
-      "ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.13",
+      "ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.15",
       "dependsOn": [
+        "pkg:raku/MIME::Base64",
         "pkg:raku/Net::DNS",
         "pkg:raku/cpan:TIMOTIMO/JSON::Fast?vers=vers:raku/%3E=0.19",
         "pkg:raku/zef:demayl/Email::Valid?vers=vers:raku/%3E=1.0.7",
+        "pkg:raku/zef:leont/YAMLish?vers=vers:raku/%3E=0.1.2",
         "pkg:raku/zef:lizmat/PURL?vers=vers:raku/%3E=0.0.14"
       ]
     },
     {
-      "ref": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
+      "ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.12",
       "dependsOn": [
         "Rakudo"
       ]

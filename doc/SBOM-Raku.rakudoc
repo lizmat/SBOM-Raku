@@ -80,7 +80,7 @@ is known in this distribution, followed by the name with which it will be
 known in the lexical context in which the C<use> command is executed.
 
 =begin code :lang<raku>
-use String::Utils <component:comp>;  # import "component" as "comp"
+use SBOM::Raku <component:comp>;  # import "component" as "comp"
 say comp |%args;
 =end code
 

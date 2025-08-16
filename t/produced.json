@@ -4,7 +4,7 @@
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-08-09T10:23:26+00:00",
+    "timestamp": "2025-08-16T15:53:07+00:00",
     "lifecycles": [
       {
         "phase": "pre-build"
@@ -19,7 +19,7 @@
     "component": {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.11",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.12",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -29,7 +29,7 @@
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "SBOM::Raku",
-      "version": "0.0.11",
+      "version": "0.0.12",
       "description": "Raku specific SBOM functionality",
       "scope": "required",
       "licenses": [
@@ -41,14 +41,14 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.11",
+      "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.12",
       "externalReferences": [
         {
           "url": "https://github.com/lizmat/SBOM-Raku",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.11",
+          "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.12",
           "type": "documentation"
         },
         {
@@ -60,7 +60,7 @@
           "type": "license"
         },
         {
-          "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.11.zip",
+          "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.12.zip",
           "type": "source-distribution"
         },
         {
@@ -88,7 +88,7 @@
         {
           "type": "library",
           "mime-type": "text/plain",
-          "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.11",
+          "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.12",
           "authors": [
             {
               "bom-ref": "ElizabethMattijsen",
@@ -98,7 +98,7 @@
           "publisher": "zef",
           "group": "zef:lizmat",
           "name": "SBOM::Raku",
-          "version": "0.0.11",
+          "version": "0.0.12",
           "description": "Raku specific SBOM functionality",
           "scope": "required",
           "licenses": [
@@ -110,14 +110,14 @@
               }
             }
           ],
-          "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.11",
+          "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.12",
           "externalReferences": [
             {
               "url": "https://github.com/lizmat/SBOM-Raku",
               "type": "distribution"
             },
             {
-              "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.11",
+              "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.12",
               "type": "documentation"
             },
             {
@@ -129,7 +129,7 @@
               "type": "license"
             },
             {
-              "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.11.zip",
+              "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.12.zip",
               "type": "source-distribution"
             },
             {
@@ -159,7 +159,7 @@
       "publisher": "Rakudo Core Developers",
       "group": "Rakudo Core Developers",
       "name": "Rakudo",
-      "version": "2025.06.1-13-g15a2a9b1f",
+      "version": "2025.06.1-14-g2d75c305e",
       "description": "The Rakudo™ Compiler implementing the Raku® Programming Language",
       "scope": "required",
       "licenses": [
@@ -182,7 +182,7 @@
           "type": "issue-tracker"
         },
         {
-          "url": "https://github.com/rakudo/rakudo/archive/15a2a9b1f.zip",
+          "url": "https://github.com/rakudo/rakudo/archive/2d75c305e.zip",
           "type": "source-distribution"
         },
         {
@@ -233,6 +233,57 @@
           "url": "https://github.com/MoarVM/MoarVM.git/archive/refs/tags/b1c74b8d8.zip",
           "type": "source-distribution"
         }
+      ]
+    },
+    {
+      "type": "library",
+      "mime-type": "text/plain",
+      "bom-ref": "pkg:raku/MIME::Base64",
+      "authors": [
+        {
+          "bom-ref": "AdrianWhite",
+          "name": "Adrian White"
+        }
+      ],
+      "publisher": "zef",
+      "group": "zef:raku-community-modules",
+      "name": "MIME::Base64",
+      "version": "1.2.4",
+      "description": "Encoding and decoding Base64 ASCII strings",
+      "scope": "required",
+      "licenses": [
+        {
+          "license": {
+            "id": "Artistic-2.0",
+            "acknowledgement": "declared",
+            "url": "https://spdx.org/licenses/Artistic-2.0.json"
+          }
+        }
+      ],
+      "purl": "pkg:raku/zef:raku-community-modules/MIME::Base64@1.2.4",
+      "externalReferences": [
+        {
+          "url": "https://raku.land/zef:raku-community-modules/MIME::Base64?v=1.2.4",
+          "type": "documentation"
+        },
+        {
+          "url": "https://github.com/raku-community-modules/MIME-Base64/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://spdx.org/licenses/Artistic-2.0.json",
+          "type": "license"
+        },
+        {
+          "url": "mailto:community@raku.org",
+          "type": "support"
+        }
+      ],
+      "tags": [
+        "MIME",
+        "BASE64",
+        "ENCODING",
+        "DECODING"
       ]
     },
     {
@@ -395,6 +446,53 @@
         "Email",
         "Valid",
         "Validator"
+      ]
+    },
+    {
+      "type": "library",
+      "mime-type": "text/plain",
+      "bom-ref": "pkg:raku/zef:leont/YAMLish?vers=vers:raku/%3E=0.1.2",
+      "authors": [
+        {
+          "bom-ref": "LeonTimmermans",
+          "name": "Leon Timmermans"
+        }
+      ],
+      "publisher": "zef",
+      "group": "zef:leont",
+      "name": "YAMLish",
+      "version": "0.1.2",
+      "description": "a YAML parser/emitter written in pure raku",
+      "scope": "required",
+      "licenses": [
+        {
+          "license": {
+            "id": "Artistic-2.0",
+            "acknowledgement": "declared",
+            "url": "https://spdx.org/licenses/Artistic-2.0.json"
+          }
+        }
+      ],
+      "purl": "pkg:raku/zef:leont/YAMLish@0.1.2",
+      "externalReferences": [
+        {
+          "url": "git://github.com/leont/yamlish",
+          "type": "distribution"
+        },
+        {
+          "url": "https://raku.land/zef:leont/YAMLish?v=0.1.2",
+          "type": "documentation"
+        },
+        {
+          "url": "https://spdx.org/licenses/Artistic-2.0.json",
+          "type": "license"
+        }
+      ],
+      "tags": [
+        "YAML",
+        "format",
+        "parser",
+        "serialization"
       ]
     },
     {
@@ -632,7 +730,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.13",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.15",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -642,7 +740,7 @@
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "SBOM::CycloneDX",
-      "version": "0.0.13",
+      "version": "0.0.15",
       "description": "Software Bill Of Materials, CycloneDX style",
       "scope": "required",
       "licenses": [
@@ -654,14 +752,14 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.13",
+      "purl": "pkg:raku/zef:lizmat/SBOM::CycloneDX@0.0.15",
       "externalReferences": [
         {
           "url": "https://github.com/lizmat/SBOM-CycloneDX",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/SBOM::CycloneDX?v=0.0.13",
+          "url": "https://raku.land/zef:lizmat/SBOM::CycloneDX?v=0.0.15",
           "type": "documentation"
         },
         {
@@ -673,7 +771,7 @@
           "type": "license"
         },
         {
-          "url": "https://github.com/lizmat/SBOM-CycloneDX/archive/refs/tags/0.0.13.zip",
+          "url": "https://github.com/lizmat/SBOM-CycloneDX/archive/refs/tags/0.0.15.zip",
           "type": "source-distribution"
         },
         {
@@ -987,7 +1085,7 @@
       "type": "distribution"
     },
     {
-      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.11",
+      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.12",
       "type": "documentation"
     },
     {
@@ -999,7 +1097,7 @@
       "type": "license"
     },
     {
-      "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.11.zip",
+      "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.12.zip",
       "type": "source-distribution"
     },
     {
@@ -1037,16 +1135,18 @@
       "ref": "pkg:raku/zef:lizmat/Rakudo::CORE::META?vers=vers:raku/%3E=0.0.12"
     },
     {
-      "ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.13",
+      "ref": "pkg:raku/zef:lizmat/SBOM::CycloneDX?vers=vers:raku/%3E=0.0.15",
       "dependsOn": [
+        "pkg:raku/MIME::Base64",
         "pkg:raku/Net::DNS",
         "pkg:raku/cpan:TIMOTIMO/JSON::Fast?vers=vers:raku/%3E=0.19",
         "pkg:raku/zef:demayl/Email::Valid?vers=vers:raku/%3E=1.0.7",
+        "pkg:raku/zef:leont/YAMLish?vers=vers:raku/%3E=0.1.2",
         "pkg:raku/zef:lizmat/PURL?vers=vers:raku/%3E=0.0.14"
       ]
     },
     {
-      "ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.11",
+      "ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.12",
       "dependsOn": [
         "Rakudo"
       ]
