@@ -1,6 +1,8 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+
+0.0.12  2025-08-16T17:57:12+02:00
     - Fix testing / binary version snafu
     - Bump dependency on SBOM::CycloneDX because we can
 

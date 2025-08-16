@@ -72,7 +72,7 @@ By default all utility functions are exported. But you can limit this to the fun
 To prevent name collisions and/or import any subroutine with a more memorable name, one can use the "original-name:known-as" syntax. A semi-colon in a specified string indicates the name by which the subroutine is known in this distribution, followed by the name with which it will be known in the lexical context in which the `use` command is executed.
 
 ```raku
-use String::Utils <component:comp>;  # import "component" as "comp"
+use SBOM::Raku <component:comp>;  # import "component" as "comp"
 say comp |%args;
 ```
 
