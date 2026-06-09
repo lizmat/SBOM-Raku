@@ -1,6 +1,6 @@
-use JSON::Fast:ver<0.19+>:auth<cpan:TIMOTIMO>;
-use OpenSSL::Digest:ver<0.2.5+>:auth<zef:raku-community-modules>;
-use PURL:ver<0.0.14+>:auth<zef:lizmat>;
+use JSON::Fast:ver<0.20+>:auth<zef:timo>;
+use OpenSSL::Digest:ver<0.2.7+>:auth<zef:raku-community-modules>;
+use PURL:ver<0.0.15+>:auth<zef:lizmat>;
 use Rakudo::CORE::META:ver<0.0.12+>:auth<zef:lizmat>;
 
 use Identity::Utils:ver<0.0.28+>:auth<zef:lizmat> <
@@ -8,16 +8,16 @@ use Identity::Utils:ver<0.0.28+>:auth<zef:lizmat> <
   ecosystem is-pinned issue-tracker-url raku-land-url short-name
   source-distribution-url ver
 >;
-use String::Utils:ver<0.0.36+>:auth<zef:lizmat> <
+use String::Utils:ver<0.0.40+>:auth<zef:lizmat> <
   after before describe-Version
 >;
 
-use SBOM::CycloneDX:ver<0.0.15+>:auth<zef:lizmat>;
-use SBOM::enums:ver<0.0.15+>:auth<zef:lizmat> <
+use SBOM::CycloneDX:ver<0.0.16+>:auth<zef:lizmat>;
+use SBOM::enums:ver<0.0.16+>:auth<zef:lizmat> <
   Acknowledgement ComponentType HashAlgorithm LicenseId Phase
   ReferenceSource Scope
 >;
-use SBOM::subsets:ver<0.0.15+>:auth<zef:lizmat> <
+use SBOM::subsets:ver<0.0.16+>:auth<zef:lizmat> <
   email
 >;
 
@@ -596,6 +596,6 @@ my sub EXPORT(*@names) {
 
 #- hack ------------------------------------------------------------------------
 # To allow version fetching in test files
-unit module SBOM::Raku:ver<0.0.12>:auth<zef:lizmat>;
+unit module SBOM::Raku:ver<0.0.13>:auth<zef:lizmat>;
 
 # vim: expandtab shiftwidth=4

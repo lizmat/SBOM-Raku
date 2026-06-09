@@ -1,6 +1,11 @@
 Revision history for SBOM::Raku
 
 {{$NEXT}}
+    - Bump dependencies
+    - Moved the source-sbom test to xt, it is too dependent
+      actual modules being installed, so it could well provide
+      false negatives when users test and install
+    - Update copyright year
 
 0.0.12  2025-08-16T17:57:12+02:00
     - Fix testing / binary version snafu
