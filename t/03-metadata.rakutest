@@ -55,7 +55,7 @@ sub metadata-ok($metadata, $source) is test-assertion {
     "purl": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
     "externalReferences": [
       {
-        "url": "https://github.com/lizmat/SBOM-Raku",
+        "url": "https://codeberg.org/lizmat/SBOM-Raku",
         "type": "distribution"
       },
       {
@@ -63,16 +63,12 @@ sub metadata-ok($metadata, $source) is test-assertion {
         "type": "documentation"
       },
       {
-        "url": "https://github.com/lizmat/SBOM-Raku/issues",
+        "url": "https://codeberg.org/lizmat/SBOM-Raku/issues",
         "type": "issue-tracker"
       },
       {
         "url": "https://spdx.org/licenses/Artistic-2.0.json",
         "type": "license"
-      },
-      {
-        "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/$version.zip",
-        "type": "source-distribution"
       },
       {
         "url": "mailto:liz@raku.rocks",
@@ -124,7 +120,7 @@ sub metadata-ok($metadata, $source) is test-assertion {
         "purl": "pkg:raku/zef:lizmat/SBOM::Raku@$version",
         "externalReferences": [
           {
-            "url": "https://github.com/lizmat/SBOM-Raku",
+            "url": "https://codeberg.org/lizmat/SBOM-Raku",
             "type": "distribution"
           },
           {
@@ -132,16 +128,12 @@ sub metadata-ok($metadata, $source) is test-assertion {
             "type": "documentation"
           },
           {
-            "url": "https://github.com/lizmat/SBOM-Raku/issues",
+            "url": "https://codeberg.org/lizmat/SBOM-Raku/issues",
             "type": "issue-tracker"
           },
           {
             "url": "https://spdx.org/licenses/Artistic-2.0.json",
             "type": "license"
-          },
-          {
-            "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/$version.zip",
-            "type": "source-distribution"
           },
           {
             "url": "mailto:liz@raku.rocks",

@@ -4,7 +4,7 @@
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-16T16:26:54+00:00",
+    "timestamp": "2026-09-16T17:28:55+00:00",
     "lifecycles": [
       {
         "phase": "pre-build"
@@ -19,7 +19,7 @@
     "component": {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.13",
+      "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.14",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -29,7 +29,7 @@
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "SBOM::Raku",
-      "version": "0.0.13",
+      "version": "0.0.14",
       "description": "Raku specific SBOM functionality",
       "scope": "required",
       "licenses": [
@@ -41,27 +41,23 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.13",
+      "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.14",
       "externalReferences": [
         {
-          "url": "https://github.com/lizmat/SBOM-Raku",
+          "url": "https://codeberg.org/lizmat/SBOM-Raku",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.13",
+          "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.14",
           "type": "documentation"
         },
         {
-          "url": "https://github.com/lizmat/SBOM-Raku/issues",
+          "url": "https://codeberg.org/lizmat/SBOM-Raku/issues",
           "type": "issue-tracker"
         },
         {
           "url": "https://spdx.org/licenses/Artistic-2.0.json",
           "type": "license"
-        },
-        {
-          "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.13.zip",
-          "type": "source-distribution"
         },
         {
           "url": "mailto:liz@raku.rocks",
@@ -88,7 +84,7 @@
         {
           "type": "library",
           "mime-type": "text/plain",
-          "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.13",
+          "bom-ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.14",
           "authors": [
             {
               "bom-ref": "ElizabethMattijsen",
@@ -98,7 +94,7 @@
           "publisher": "zef",
           "group": "zef:lizmat",
           "name": "SBOM::Raku",
-          "version": "0.0.13",
+          "version": "0.0.14",
           "description": "Raku specific SBOM functionality",
           "scope": "required",
           "licenses": [
@@ -110,27 +106,23 @@
               }
             }
           ],
-          "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.13",
+          "purl": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.14",
           "externalReferences": [
             {
-              "url": "https://github.com/lizmat/SBOM-Raku",
+              "url": "https://codeberg.org/lizmat/SBOM-Raku",
               "type": "distribution"
             },
             {
-              "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.13",
+              "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.14",
               "type": "documentation"
             },
             {
-              "url": "https://github.com/lizmat/SBOM-Raku/issues",
+              "url": "https://codeberg.org/lizmat/SBOM-Raku/issues",
               "type": "issue-tracker"
             },
             {
               "url": "https://spdx.org/licenses/Artistic-2.0.json",
               "type": "license"
-            },
-            {
-              "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.13.zip",
-              "type": "source-distribution"
             },
             {
               "url": "mailto:liz@raku.rocks",
@@ -467,7 +459,7 @@
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "PURL",
-      "version": "0.0.16",
+      "version": "0.0.17",
       "description": "Package URL specification v1.0.X",
       "scope": "required",
       "licenses": [
@@ -479,14 +471,14 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/PURL@0.0.16",
+      "purl": "pkg:raku/zef:lizmat/PURL@0.0.17",
       "externalReferences": [
         {
           "url": "https://codeberg.org/lizmat/PURL",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/PURL?v=0.0.16",
+          "url": "https://raku.land/zef:lizmat/PURL?v=0.0.17",
           "type": "documentation"
         },
         {
@@ -510,7 +502,7 @@
     {
       "type": "library",
       "mime-type": "text/plain",
-      "bom-ref": "pkg:raku/zef:lizmat/PURL?vers=vers:raku/%3E=0.0.16",
+      "bom-ref": "pkg:raku/zef:lizmat/PURL?vers=vers:raku/%3E=0.0.17",
       "authors": [
         {
           "bom-ref": "ElizabethMattijsen",
@@ -520,7 +512,7 @@
       "publisher": "zef",
       "group": "zef:lizmat",
       "name": "PURL",
-      "version": "0.0.16",
+      "version": "0.0.17",
       "description": "Package URL specification v1.0.X",
       "scope": "required",
       "licenses": [
@@ -532,14 +524,14 @@
           }
         }
       ],
-      "purl": "pkg:raku/zef:lizmat/PURL@0.0.16",
+      "purl": "pkg:raku/zef:lizmat/PURL@0.0.17",
       "externalReferences": [
         {
           "url": "https://codeberg.org/lizmat/PURL",
           "type": "distribution"
         },
         {
-          "url": "https://raku.land/zef:lizmat/PURL?v=0.0.16",
+          "url": "https://raku.land/zef:lizmat/PURL?v=0.0.17",
           "type": "documentation"
         },
         {
@@ -1251,24 +1243,20 @@
   ],
   "externalReferences": [
     {
-      "url": "https://github.com/lizmat/SBOM-Raku",
+      "url": "https://codeberg.org/lizmat/SBOM-Raku",
       "type": "distribution"
     },
     {
-      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.13",
+      "url": "https://raku.land/zef:lizmat/SBOM::Raku?v=0.0.14",
       "type": "documentation"
     },
     {
-      "url": "https://github.com/lizmat/SBOM-Raku/issues",
+      "url": "https://codeberg.org/lizmat/SBOM-Raku/issues",
       "type": "issue-tracker"
     },
     {
       "url": "https://spdx.org/licenses/Artistic-2.0.json",
       "type": "license"
-    },
-    {
-      "url": "https://github.com/lizmat/SBOM-Raku/archive/refs/tags/0.0.13.zip",
-      "type": "source-distribution"
     },
     {
       "url": "mailto:liz@raku.rocks",
@@ -1289,7 +1277,7 @@
       ]
     },
     {
-      "ref": "pkg:raku/zef:lizmat/PURL?vers=vers:raku/%3E=0.0.16",
+      "ref": "pkg:raku/zef:lizmat/PURL?vers=vers:raku/%3E=0.0.17",
       "dependsOn": [
         "pkg:raku/zef:lizmat/Identity::Utils?vers=vers:raku/%3E=0.0.29",
         "pkg:raku/zef:lizmat/VERS?vers=vers:raku/%3E=0.0.3",
@@ -1317,7 +1305,7 @@
       ]
     },
     {
-      "ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.13",
+      "ref": "pkg:raku/zef:lizmat/SBOM::Raku@0.0.14",
       "dependsOn": [
         "Rakudo"
       ]
