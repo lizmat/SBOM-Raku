@@ -1,9 +1,9 @@
-use JSON::Fast:ver<0.20+>:auth<zef:timo>;
+use JSON::Fast:ver<0.21+>:auth<zef:timo>;
 use OpenSSL::Digest:ver<0.2.7+>:auth<zef:raku-community-modules>;
-use PURL:ver<0.0.15+>:auth<zef:lizmat>;
+use PURL:ver<0.0.17+>:auth<zef:lizmat>;
 use Rakudo::CORE::META:ver<0.0.12+>:auth<zef:lizmat>;
 
-use Identity::Utils:ver<0.0.28+>:auth<zef:lizmat> <
+use Identity::Utils:ver<0.0.29+>:auth<zef:lizmat> <
   auth build meta dependencies-from-meta distribution-name
   ecosystem is-pinned issue-tracker-url raku-land-url short-name
   source-distribution-url ver
@@ -12,12 +12,12 @@ use String::Utils:ver<0.0.40+>:auth<zef:lizmat> <
   after before describe-Version
 >;
 
-use SBOM::CycloneDX:ver<0.0.16+>:auth<zef:lizmat>;
-use SBOM::enums:ver<0.0.16+>:auth<zef:lizmat> <
+use SBOM::CycloneDX:ver<0.0.18+>:auth<zef:lizmat>;
+use SBOM::enums:ver<0.0.18+>:auth<zef:lizmat> <
   Acknowledgement ComponentType HashAlgorithm LicenseId Phase
   ReferenceSource Scope
 >;
-use SBOM::subsets:ver<0.0.16+>:auth<zef:lizmat> <
+use SBOM::subsets:ver<0.0.18+>:auth<zef:lizmat> <
   email
 >;
 
